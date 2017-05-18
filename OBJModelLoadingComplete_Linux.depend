@@ -1,0 +1,136 @@
+# depslib dependency file v1.0
+1456696334 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Axes.cpp
+	"Axes.h"
+
+1456696078 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Axes.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"ProgramDefines.h"
+
+1458501550 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/ProgramDefines.h
+
+1458845110 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Light.cpp
+	"Light.h"
+
+1458845004 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Light.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1454897742 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/LoadShaders.cpp
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<GL/glew.h>
+	"LoadShaders.h"
+
+1448220916 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/LoadShaders.h
+	<GL/gl.h>
+	<string>
+
+1463962992 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/main.cpp
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	"GraphicsEngine.h"
+	"UI.h"
+
+1490487067 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/GraphicsEngine.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	<stdio.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"LoadShaders.h"
+	"ProgramDefines.h"
+	"SphericalCamera.h"
+	"YPRCamera.h"
+	"Axes.h"
+	"teapot.h"
+	"Material.h"
+	"Light.h"
+	"MaterialPresets.h"
+	"Models.h"
+	"ObjModel.h"
+
+1458519416 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/SphericalCamera.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<math.h>
+	"ProgramDefines.h"
+
+1456698704 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/YPRCamera.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"ProgramDefines.h"
+
+1459816006 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/teapot.h
+	<GL/glew.h>
+
+1490227667 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Material.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1460217552 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/MaterialPresets.h
+	"Material.h"
+
+1459816920 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Models.h
+	<GL/glew.h>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<iostream>
+	"ProgramDefines.h"
+
+1490489706 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/ObjModel.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<SFML/Graphics.hpp>
+	<iostream>
+	<string>
+	<vector>
+	<fstream>
+	"LoadShaders.h"
+	"ProgramDefines.h"
+	"Material.h"
+	"Light.h"
+
+1458523994 /home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/UI.h
+	"GraphicsEngine.h"
+
+1458847776 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Material.cpp
+	"Material.h"
+
+1459818780 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/Models.cpp
+	"Models.h"
+
+1490489530 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/ObjModel.cpp
+	"ObjModel.h"
+
+1458519510 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/SphericalCamera.cpp
+	"SphericalCamera.h"
+
+1459990618 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/UI.cpp
+	"UI.h"
+
+1456708854 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/YPRCamera.cpp
+	"YPRCamera.h"
+
+1490487145 source:/home/don/Programming/ObjModel_Examples/OBJModelLoadingComplete/GraphicsEngine.cpp
+	"GraphicsEngine.h"
+

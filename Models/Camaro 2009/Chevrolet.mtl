@@ -1,0 +1,218 @@
+# MTL written from Chevrolet CAMARO_2009.obj
+newmtl Body
+Kd 0.370118 0.375294 0.375294
+Ns 13.9288
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.62 0.62 0.62
+newmtl Brake_032Pads
+Kd 0.505882 0.505882 0.505882
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd CAMARO_MISC.jpg
+newmtl Chrome
+Kd 0.290196 0.290196 0.290196
+Ns 16
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.86 0.86 0.86
+newmtl Clignotant
+Kd 0.533333 0.156863 0.156863
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.08 0.08 0.08
+map_Kd CAMARO_BADGING.jpg
+newmtl Dessous
+Kd 0.141176 0.141176 0.141176
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0
+newmtl Dessous_032text
+Kd 0.141176 0.141176 0.141176
+Ns 8
+d 1
+illum 2
+Ka 0 0 0
+Ks 0 0 0
+map_Kd BOTTOM.jpg
+newmtl Disk
+Kd 0.232941 0.229412 0.218824
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.3 0.3 0.3
+map_Kd BRAKDISC.jpg
+newmtl Feux_032avant
+Kd 0.180392 0.180392 0.180392
+Ns 64
+d 0.72
+illum 2
+Ka 0 0 0
+Ks 0.1 0.1 0.1
+map_Kd CAMARO_MISC.jpg
+newmtl Feux_032cd
+Kd 0.443137 0.14902 0.109804
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd Feux_2.jpg
+newmtl Feux_032cg
+Kd 0.443137 0.14902 0.109804
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd Feux_2.jpg
+newmtl Feux_032d
+Kd 0.619608 0.211765 0.152941
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd Feux_D.jpg
+newmtl Feux_032g
+Kd 0.619608 0.211765 0.152941
+Ns 256
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd Feux_G.jpg
+newmtl Feux_032glass
+Kd 0.117647 0.117647 0.117647
+Ns 64
+d 0.25
+illum 2
+Ka 0 0 0
+Ks 0.5 0.5 0.5
+newmtl Interieur
+Kd 0.184471 0.184471 0.184471
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.06 0.06 0.06
+map_Kd CAMARO_INTERIOR.jpg
+newmtl Jante
+Kd 0.503961 0.503961 0.503961
+Ns 14.9285
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.55 0.55 0.55
+newmtl Joint_032de_032vitre
+Kd 0.215686 0.215686 0.215686
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.16 0.16 0.16
+newmtl Logo_032chevy
+Kd 0.454902 0.368627 0.203922
+Ns 21.1121
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.8 0.8 0.8
+newmtl Miroir
+Kd 0.254902 0.254902 0.254902
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.6 0.6 0.6
+newmtl Misc
+Kd 0.254902 0.254902 0.254902
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd CAMARO_MISC.jpg
+newmtl Partie_032noir
+Kd 0 0 0
+Ns 256
+d 1
+illum 1
+Ka 0 0 0
+Ks 0 0 0
+newmtl Phare
+Kd 0.203922 0.227451 0.254902
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.655 0.655 0.655
+newmtl Phare_032optique
+Kd 1 1 1
+Ns 36.7583
+d 0.4
+illum 2
+Ka 0 0 0
+Ks 0.505 0.505 0.505
+newmtl Phare_032text
+Kd 0.25098 0.25098 0.25098
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd CAMARO_HEADLIGHT.jpg
+newmtl Phare_032vitre
+Kd 0.494118 0.517647 0.529412
+Ns 16
+d 0.365
+illum 2
+Ka 0 0 0
+Ks 0.32 0.32 0.32
+newmtl Plaque
+Kd 0.690196 0.705882 0.709804
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+map_Kd plaque2.jpg
+newmtl Plastique_032noir
+Kd 0.2 0.2 0.2
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.15 0.15 0.15
+newmtl Pneu_032texture
+Kd 0.243137 0.243137 0.243137
+Ns 64
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.02 0.02 0.02
+map_Kd TIRE.jpg
+newmtl Vitre
+Kd 0.176471 0.215686 0.215686
+Ns 16
+d 0.36
+illum 2
+Ka 0 0 0
+Ks 0.6 0.6 0.6
+newmtl Vitre_032noir
+Kd 0.0392157 0.0392157 0.0392157
+Ns 16
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.9 0.9 0.9

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="OBJModelLoadingComplete_Linux" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/OBJModelLoading_Linux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+					<Add directory="lib/loaders" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/OBJModelLoading_Linux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+					<Add directory="lib/loaders" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DGLM_FORCE_RADIANS" />
+		</Compiler>
+		<Linker>
+			<Add library="GLEW" />
+			<Add library="GL" />
+			<Add library="GLU" />
+		</Linker>
+		<Unit filename="GraphicsEngine.cpp" />
+		<Unit filename="GraphicsEngine.h" />
+		<Unit filename="UI.cpp" />
+		<Unit filename="UI.h" />
+		<Unit filename="lib/cameras/SphericalCamera.cpp" />
+		<Unit filename="lib/cameras/SphericalCamera.h" />
+		<Unit filename="lib/cameras/YPRCamera.cpp" />
+		<Unit filename="lib/cameras/YPRCamera.h" />
+		<Unit filename="lib/layouts/SubWindow.cpp" />
+		<Unit filename="lib/layouts/SubWindow.h" />
+		<Unit filename="lib/loaders/BoxLoader.cpp" />
+		<Unit filename="lib/loaders/BoxLoader.h" />
+		<Unit filename="lib/loaders/DataLoader.cpp" />
+		<Unit filename="lib/loaders/DataLoader.h" />
+		<Unit filename="lib/loaders/DataLoaderWorker.cpp" />
+		<Unit filename="lib/loaders/DataLoaderWorker.h" />
+		<Unit filename="lib/loaders/PointsLoader.cpp" />
+		<Unit filename="lib/loaders/PointsLoader.h" />
+		<Unit filename="lib/objects/Axes.cpp" />
+		<Unit filename="lib/objects/Axes.h" />
+		<Unit filename="lib/objects/BoundingBox.cpp" />
+		<Unit filename="lib/objects/BoundingBox.h" />
+		<Unit filename="lib/objects/Car.cpp" />
+		<Unit filename="lib/objects/Car.h" />
+		<Unit filename="lib/objects/Gauge.cpp" />
+		<Unit filename="lib/objects/Gauge.h" />
+		<Unit filename="lib/objects/Light.cpp" />
+		<Unit filename="lib/objects/Light.h" />
+		<Unit filename="lib/objects/MainCar.cpp" />
+		<Unit filename="lib/objects/MainCar.h" />
+		<Unit filename="lib/objects/Models.cpp" />
+		<Unit filename="lib/objects/Models.h" />
+		<Unit filename="lib/objects/ObjModel.cpp" />
+		<Unit filename="lib/objects/ObjModel.h" />
+		<Unit filename="lib/objects/OtherCar.cpp" />
+		<Unit filename="lib/objects/OtherCar.h" />
+		<Unit filename="lib/objects/RoadPlane.cpp" />
+		<Unit filename="lib/objects/RoadPlane.h" />
+		<Unit filename="lib/patterns/Observer.cpp" />
+		<Unit filename="lib/patterns/Observer.h" />
+		<Unit filename="lib/patterns/Subject.cpp" />
+		<Unit filename="lib/patterns/Subject.h" />
+		<Unit filename="lib/utils/LoadShaders.cpp" />
+		<Unit filename="lib/utils/LoadShaders.h" />
+		<Unit filename="lib/utils/Material.cpp" />
+		<Unit filename="lib/utils/Material.h" />
+		<Unit filename="lib/utils/MaterialPresets.h" />
+		<Unit filename="lib/utils/ProgramDefines.h" />
+		<Unit filename="lib/utils/SafeQueue.cpp" />
+		<Unit filename="lib/utils/SafeQueue.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="teapot.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
