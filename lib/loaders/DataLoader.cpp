@@ -215,7 +215,6 @@ void DataLoader::loadDataByThread(const char* id) {
         char filename[400];
         sprintf(filename, "%s/%s/%s_drive_%04d_sync/tracklets/%s.txt", path, date, date, drive, id);
         std::string newFilename(filename, 400);
-
         t[cloudpointObserver ? 1 : 0] = std::thread(DataLoader::loadBBoxes, std::ref(bboxQueue), newFilename);
     }
 
@@ -263,6 +262,13 @@ void* DataLoader::loadBBoxes(SafeQueue<std::vector<BoundingBox>>* queue, std::st
     }
 
     std::ifstream infile(filename);
+    if(!infile.is_open())
+    {
+        std::cout << " could not open file" << filename << std::endl;
+        std::cout << " program Terminating....\n";
+        exit(EXIT_FAILURE);
+    }
+
     std::vector<BoundingBox> data = std::vector<BoundingBox>();
     std::string line;
     while (std::getline(infile, line))

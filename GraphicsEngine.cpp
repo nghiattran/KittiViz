@@ -185,49 +185,6 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     setActive();
     resize();
 
-    // // y, z, x
-    // float x = 25.212516037456261;
-    // float y = 8.6033915444744817;
-    // float z = -1.7921571450416216;
-
-    // float h = 2.1672349;
-    // float w = 1.7057118;
-    // float l = 4.3293562;
-
-    // float r = 3.1842001424562025;
-
-    // glm::vec3 transform = glm::vec3(x, y, z);
-    // glm::vec3 s = glm::vec3(w, h, l);
-    // boxes.push_back(new BoundingBox(s, transform, r));
-
-    // x = 33.648305986718775;
-    // y = 7.9286001259395968;
-    // z = -1.673748966306448;
-
-    // h = 1.7328788;
-    // w = 1.6015041;
-    // l = 4.1129236;
-
-    // r = 3.0701635387416921;
-
-    // transform = glm::vec3(x, y, z);
-    // s = glm::vec3(w, h, l);
-    // boxes.push_back(new BoundingBox(s, transform, r));
-
-    // x = 49.766170732305035;
-    // y = 6.4503219446405939;
-    // z = -1.4850127159258841;
-
-    // h = 1.8019634;
-    // w = 1.6056261;
-    // l = 3.8312221;
-
-    // r = 3.0429971978519488;
-
-    // transform = glm::vec3(x, y, z);
-    // s = glm::vec3(w, h, l);
-    // boxes.push_back(new BoundingBox(s, transform, r));
-
     // Always run at the end.
     dataLoader->runWorker();
 }
@@ -303,8 +260,7 @@ void GraphicsEngine::display()
 
     glUniform3fv(glGetUniformLocation(program, "eye"), 1, glm::value_ptr(eye));
     mainCar.setEye(eye);
-
-    // mainCar.draw(projection, view);
+    mainCar.draw(projection, view);
 
     glViewport(0, 0, subwindowSize.x, subwindowSize.y);
     drawSideWindows();

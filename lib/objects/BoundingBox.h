@@ -22,10 +22,13 @@ class BoundingBox
         glm::mat4 getModelMatrix();
     protected:
     private:
+        glm::mat4 model;
         std::string objectType;
         glm::vec3 size;
         glm::vec3 transform;
         float rotAngle;
+
+        void setData(char[], glm::vec3, glm::vec3, float);
 };
 
 #endif // BOUNDINGBOX_H

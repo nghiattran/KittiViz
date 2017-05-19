@@ -11,9 +11,18 @@ BoxLoader::BoxLoader()
 
     for (uint i = 0; i < NUM_PTS; i++)
     {
-        colors[i * 3] = 1;
-        colors[i * 3 + 1] = 0;
-        colors[i * 3 + 2] = 0;
+        if (points[i*4] < 0)
+        {
+            colors[i * 3] = 1;
+            colors[i * 3 + 1] = 0;
+            colors[i * 3 + 2] = 0;
+        } 
+        else
+        {
+            colors[i * 3] = 0;
+            colors[i * 3 + 1] = 0;
+            colors[i * 3 + 2] = 1;
+        }
     }
 
     LoadDataToGraphicsCard();
@@ -70,7 +79,6 @@ void BoxLoader::LoadDataToGraphicsCard()
 void BoxLoader::draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view)
 {
     glLineWidth(5);
-    // printf("%d\n", boxes.size());
     for (int i = 0; i < boxes.size(); i++)
     {
         glm::mat4 boxModel = boxes[i].getModelMatrix();

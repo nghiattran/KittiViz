@@ -44,7 +44,7 @@ class DataLoader
 
         char path[100] = "/home/nghia/workplace/data/kitti";
         char date[20] = "2011_09_26";
-        int drive = 1;
+        int drive = 36;
 
         int cnt = 0;
         int numImages = 802;          ///< Total number of frames in a video.

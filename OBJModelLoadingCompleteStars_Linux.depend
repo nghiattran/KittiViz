@@ -266,7 +266,7 @@
 1456708854 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/YPRCamera.cpp
 	"YPRCamera.h"
 
-1495148136 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.cpp
+1495161269 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.cpp
 	"GraphicsEngine.h"
 
 1494370468 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/include/MainCar.h
@@ -472,7 +472,7 @@
 1494609802 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Car.cpp
 	"Car.h"
 
-1494643926 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/MainCar.cpp
+1495152778 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/MainCar.cpp
 	"MainCar.h"
 
 1494609812 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/OtherCar.cpp
@@ -512,7 +512,7 @@
 	<GL/gl.h>
 	<string>
 
-1495143728 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
+1495157454 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -592,7 +592,7 @@
 1495136807 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/layouts/SubWindow.cpp
 	"SubWindow.h"
 
-1495145804 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.cpp
+1495157531 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.cpp
 	"DataLoader.h"
 
 1495148164 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/PointsLoader.cpp
@@ -680,7 +680,7 @@
 1494902861 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/SafeQueue.cpp
 	"SafeQueue.h"
 
-1495142915 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/BoundingBox.h
+1495155774 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/BoundingBox.h
 	<stdio.h>
 	<cstdlib>
 	<string>
@@ -692,13 +692,13 @@
 	"../utils/LoadShaders.h"
 	"../utils/ProgramDefines.h"
 
-1495148395 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/BoundingBox.cpp
+1495161201 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/BoundingBox.cpp
 	"BoundingBox.h"
 
-1495144158 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.cpp
+1495157487 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.cpp
 	"BoxLoader.h"
 
-1495142034 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.h
+1495154872 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.h
 	<stdio.h>
 	<cstdlib>
 	<iostream>
