@@ -28,7 +28,9 @@ class DataLoader
     public:
         ~DataLoader();
 
-        static DataLoader* instance();
+        static DataLoader* getInstance();
+        static const int QUEUE_SIZE = 20;
+        static const int MIN_FILL = 10;
 
         void nextID();
         void update();
@@ -44,7 +46,7 @@ class DataLoader
 
         char path[100] = "/home/nghia/workplace/data/kitti";
         char date[20] = "2011_09_26";
-        int drive = 36;
+        int drive = 1;
 
         int cnt = 0;
         int numImages = 802;          ///< Total number of frames in a video.
@@ -53,8 +55,7 @@ class DataLoader
         bool isLoaded = false;          ///< Flag indicating if data is loaded.
         bool isStop = false;
 
-        static const int QUEUE_SIZE = 20;
-        static const int MIN_FILL = 10;
+        static DataLoader* mInstance;
         std::thread workerThread;
 
         SafeQueue <std::vector<float>>* cloudpointQueue;

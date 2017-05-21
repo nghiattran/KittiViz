@@ -188,6 +188,9 @@ void UI::keyPressed(sf::Event::KeyEvent keyevent)
         ge->togglePlayingVideo();
         break;
 
+    case sf::Keyboard::C:
+        ge->toggleDrawCloudpoints();
+        break;
 
     default:
         break;

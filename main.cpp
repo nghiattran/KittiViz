@@ -125,7 +125,7 @@ int main()
     }
 
     std::string progName = "Autonomous Car Simulator";
-    GraphicsEngine ge(progName, 1900, 800);
+    GraphicsEngine ge(progName, 1500, 800);
     UI ui(&ge);
 
     long framecount = 0;

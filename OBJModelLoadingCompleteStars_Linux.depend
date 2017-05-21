@@ -165,7 +165,7 @@
 	<GL/gl.h>
 	<string>
 
-1494543237 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/main.cpp
+1495340727 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/main.cpp
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -175,7 +175,7 @@
 	"GraphicsEngine.h"
 	"UI.h"
 
-1495140122 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.h
+1495376805 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -196,6 +196,7 @@
 	"lib/objects/Models.h"
 	"lib/objects/MainCar.h"
 	"lib/objects/BoundingBox.h"
+	"lib/objects/Gauge.h"
 	"lib/layouts/SubWindow.h"
 
 1458515816 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/SphericalCamera.h
@@ -260,13 +261,13 @@
 1494542228 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/SphericalCamera.cpp
 	"SphericalCamera.h"
 
-1494890135 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/UI.cpp
+1495166998 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/UI.cpp
 	"UI.h"
 
 1456708854 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/YPRCamera.cpp
 	"YPRCamera.h"
 
-1495161269 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.cpp
+1495378221 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.cpp
 	"GraphicsEngine.h"
 
 1494370468 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/include/MainCar.h
@@ -472,7 +473,7 @@
 1494609802 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Car.cpp
 	"Car.h"
 
-1495152778 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/MainCar.cpp
+1495161531 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/MainCar.cpp
 	"MainCar.h"
 
 1494609812 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/OtherCar.cpp
@@ -484,7 +485,7 @@
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
 
-1495072768 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/PointsLoader.h
+1495334426 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/PointsLoader.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -512,7 +513,7 @@
 	<GL/gl.h>
 	<string>
 
-1495157454 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
+1495334364 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -575,7 +576,7 @@
 1460213952 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/MaterialPresets.h
 	"Material.h"
 
-1495136720 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/layouts/SubWindow.h
+1495340140 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/layouts/SubWindow.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -588,21 +589,25 @@
 	<glm/gtc/type_ptr.hpp>
 	"../objects/Models.h"
 	"../utils/LoadShaders.h"
+	"../utils/TextureController.h"
+	"../utils/Texture.h"
 
-1495136807 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/layouts/SubWindow.cpp
+1495378078 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/layouts/SubWindow.cpp
 	"SubWindow.h"
 
-1495157531 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.cpp
+1495334358 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.cpp
 	"DataLoader.h"
 
-1495148164 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/PointsLoader.cpp
+1495334491 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/PointsLoader.cpp
 	"PointsLoader.h"
 
 1495061309 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Axes.cpp
 	"Axes.h"
 
-1494615485 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.cpp
+1495378192 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.cpp
 	"Gauge.h"
+
+1495340232 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -610,12 +615,15 @@
 	<iostream>
 	<string>
 	<stdio.h>
+	<math.h>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
-	"Models.h"
-
-1494614718 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.h
+	"../objects/Models.h"
+	"../utils/ProgramDefines.h"
+	"../utils/LoadShaders.h"
+	"../utils/TextureController.h"
+	"../utils/Texture.h"
 
 1458841510 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Light.cpp
 	"Light.h"
@@ -626,7 +634,7 @@
 1494461236 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/ObjModel.cpp
 	"ObjModel.h"
 
-1494479670 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/RoadPlane.cpp
+1495302652 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/RoadPlane.cpp
 	"RoadPlane.h"
 
 1494615656 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/RoadPlane.h
@@ -710,4 +718,31 @@
 	"../utils/LoadShaders.h"
 	"../utils/ProgramDefines.h"
 	"../objects/BoundingBox.h"
+
+1495378053 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/TextureController.cpp
+	"TextureController.h"
+
+1495340327 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/TextureController.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	<stdio.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../utils/LoadShaders.h"
+	"../utils/Texture.h"
+
+1495344178 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/Texture.h
+	<GL/glew.h>
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+
+1495337215 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/Texture.cpp
+	"Texture.h"
 

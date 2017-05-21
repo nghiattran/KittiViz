@@ -15,6 +15,7 @@
 					<Add option="-g" />
 					<Add directory="include" />
 					<Add directory="lib/loaders" />
+					<Add directory="lib/utils" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics" />
@@ -31,6 +32,7 @@
 					<Add option="-O2" />
 					<Add directory="include" />
 					<Add directory="lib/loaders" />
+					<Add directory="lib/utils" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -99,6 +101,10 @@
 		<Unit filename="lib/utils/ProgramDefines.h" />
 		<Unit filename="lib/utils/SafeQueue.cpp" />
 		<Unit filename="lib/utils/SafeQueue.h" />
+		<Unit filename="lib/utils/Texture.cpp" />
+		<Unit filename="lib/utils/Texture.h" />
+		<Unit filename="lib/utils/TextureController.cpp" />
+		<Unit filename="lib/utils/TextureController.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="teapot.h" />
 		<Extensions>

@@ -1,5 +1,7 @@
 #include "DataLoader.h"
 
+DataLoader* DataLoader::mInstance = NULL;
+
 DataLoader::DataLoader()
 {
     char folderPath[400];
@@ -47,15 +49,12 @@ Create a singleton object of DataLoader.
 
 */
 
-DataLoader* DataLoader::instance() {
-    return new DataLoader();
-
-    // TODO: FIX. something goes wrong with singleton
-    // if (!s_instance)
-    // {
-    //     s_instance = new DataLoader();
-    // }
-    // return s_instance;
+DataLoader* DataLoader::getInstance() {
+    if (!mInstance)
+    {
+        mInstance = new DataLoader;
+    }
+    return mInstance;
 }
 
 void DataLoader::nextID() {

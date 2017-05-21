@@ -17,6 +17,8 @@ Loads the shaders, and sets some initial data settings.
 
 */
 
+PointsLoader* PointsLoader::mInstance = NULL;
+
 PointsLoader::PointsLoader()
 {
     // This creates our identifier and puts it in vbo
@@ -44,15 +46,12 @@ Create a singleton object of PointsLoader.
 
 */
 
-PointsLoader* PointsLoader::instance() {
-    return new PointsLoader();
-
-    // TODO: FIX. something goes wrong with singleton
-    // if (!s_instance)
-    // {
-    //     s_instance = new PointsLoader();
-    // }
-    // return s_instance;
+PointsLoader* PointsLoader::getInstance() {
+    if (!mInstance)
+    {
+        mInstance = new PointsLoader;
+    }
+    return mInstance;
 }
 
 /**

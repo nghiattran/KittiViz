@@ -27,8 +27,7 @@ class PointsLoader
 {
     public:
         ~PointsLoader();
-        static PointsLoader *s_instance;
-        static PointsLoader* instance();
+        static PointsLoader* getInstance();
 
         void draw();
 
@@ -38,6 +37,7 @@ class PointsLoader
     private:
         PointsLoader();
 
+        static PointsLoader* mInstance;
         bool isLoaded;
 
         static constexpr float maxVelodyneDst = 80;     ///< Approximation of max distance of points in KITTI velodyne setup.

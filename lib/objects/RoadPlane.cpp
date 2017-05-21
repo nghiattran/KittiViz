@@ -75,9 +75,11 @@ void RoadPlane::draw(GLuint& nprogram) {
     glUseProgram(program);
     glm::mat4 view(1.0);
     glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(projection*view*model));
+    
     glUniform1i(useTextureLoc, true);
     Models::draw();
     glUniformMatrix4fv(texTransLoc, 1, GL_FALSE, glm::value_ptr(textrans));
+    glUniform1i(useTextureLoc, false);
 
     glUseProgram(nprogram);
 }

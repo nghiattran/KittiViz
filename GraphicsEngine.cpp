@@ -35,15 +35,18 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     isPlaying = GL_FALSE;
     fps = 5;
 
-    dataLoader = DataLoader::instance();
+    dataLoader = DataLoader::getInstance();
 
-    pointsLoader = PointsLoader::instance();
+    pointsLoader = PointsLoader::getInstance();
     dataLoader->attachCloudpointLoader(pointsLoader);
 
     boxLoader = BoxLoader::instance();
     dataLoader->attachBoxLoader(boxLoader);
 
     setupSideWindows();
+
+    gauge.load();
+    dataLoader->runWorker();
 
     mainCar.load();
 
@@ -94,49 +97,45 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
         setFramerateLimit(0);
     }
 
-    for (int i = 0; i < 3; i++)
-        lt[i].setLight(true,
-                       30.0, 30.0, 30.0, 1.0,
-                       -1.0, -1.0, -1.0,
-                       0.0, 0.0, 0.0, 1.0,
-                       0.70, 0.70, 0.70, 1.0,
-                       0.70, 0.70, 0.70, 1.0,
-                       180.0, 0.0,
-                       1.0, 0.0, 0.0
-                      );
-
-    mat = Materials::redPlastic;
-    //mat = Materials::brass;
-
+    model = glm::mat4(1.0);
     mainCar.setGlobalAmbient(GlobalAmbient);
 
-    lightobj.createSphereOBJ(0.25, 7, 7);
-    lightobj.load(0, 1, 2, 3);
-    lightobj.setColor(1, 1, 0);
-    lightobj.setDrawBorder(GL_TRUE);
+    // for (int i = 0; i < NUM_LIGHT; i++)
+    //     lt[i].setLight(true,
+    //                    30.0, 30.0, 30.0, 1.0,
+    //                    -1.0, -1.0, -1.0,
+    //                    0.0, 0.0, 0.0, 1.0,
+    //                    0.70, 0.70, 0.70, 1.0,
+    //                    0.70, 0.70, 0.70, 1.0,
+    //                    180.0, 0.0,
+    //                    1.0, 0.0, 0.0
+    //                   );
 
-    LtPos[0].setTheta(45);
-    LtPos[0].setPsi(45);
-    LtPos[0].setR(15);
+    // lightobj.createSphereOBJ(0.25, 7, 7);
+    // lightobj.load(0, 1, 2, 3);
+    // lightobj.setColor(1, 1, 0);
+    // lightobj.setDrawBorder(GL_TRUE);
 
-    LtPos[1].setTheta(100);
-    LtPos[1].setPsi(-45);
-    LtPos[1].setR(20);
+    // LtPos[0].setTheta(45);
+    // LtPos[0].setPsi(45);
+    // LtPos[0].setR(15);
 
-    LtPos[2].setTheta(-100);
-    LtPos[2].setPsi(60);
-    LtPos[2].setR(20);
+    // LtPos[1].setTheta(100);
+    // LtPos[1].setPsi(-45);
+    // LtPos[1].setR(20);
 
-    for (int i = 0; i < 3; i++)
-    {
-        lt[i].setPosition(glm::vec4(LtPos[i].getPosition(), 1.0));
-        lt[i].setSpotDirection(-LtPos[i].getPosition());
-    }
+    // LtPos[2].setTheta(-100);
+    // LtPos[2].setPsi(60);
+    // LtPos[2].setR(20);
 
-    model = glm::mat4(1.0);
+    // for (int i = 0; i < NUM_LIGHT; i++)
+    // {
+    //     lt[i].setPosition(glm::vec4(LtPos[i].getPosition(), 1.0));
+    //     lt[i].setSpotDirection(-LtPos[i].getPosition());
+    // }
 
-    mainCar.setNumberOfLights(3);
-    for (int i = 0; i < 3; i++)
+    mainCar.setNumberOfLights(NUM_LIGHT);
+    for (int i = 0; i < NUM_LIGHT; i++)
         mainCar.setLight(i, lt[i]);
 
     //  Load cubemap shaders and texture.
@@ -184,9 +183,6 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
 
     setActive();
     resize();
-
-    // Always run at the end.
-    dataLoader->runWorker();
 }
 
 
@@ -212,10 +208,11 @@ This function clears the screen and calls the draw functions of the box and circ
 
 void GraphicsEngine::display()
 {
+    dataLoader->nextID();
+
     glUseProgram(program);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    dataLoader->nextID();
 
     glm::mat4 up = glm::rotate(model, 90*degf, glm::vec3(1, 0, 0));
 
@@ -231,9 +228,8 @@ void GraphicsEngine::display()
         view = yprcamera.lookAt();
 
     glUseProgram(CMprogram);
-    glUniformMatrix4fv(glGetUniformLocation(CMprogram, "PVM"),
-                       1, GL_FALSE, glm::value_ptr(projection*view*model));
-
+    glUniformMatrix4fv(glGetUniformLocation(CMprogram, "PVM"), 1, GL_FALSE, glm::value_ptr(projection*view*model));
+    // CMSphere.draw();
     glUseProgram(program);
 
     // Set axes scaling.
@@ -242,14 +238,18 @@ void GraphicsEngine::display()
     // Load matrix product to shader.
     glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(projection*view*axesscale));
 
-    if (isDrawAxes)
-        coords.draw();
+    // if (isDrawAxes)
+    //     coords.draw();
 
     // Reset PVM
     glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(projection*view*up));
 
-    pointsLoader->draw();
+    if (isDrawCloudpoints)
+        pointsLoader->draw();
     boxLoader->draw(PVMLoc, projection, view);
+
+    gauge.draw();
+    glUseProgram(program);
 
     // Look at the main vehicle
     glm::vec3 eye;
@@ -264,7 +264,8 @@ void GraphicsEngine::display()
 
     glViewport(0, 0, subwindowSize.x, subwindowSize.y);
     drawSideWindows();
-
+    glUseProgram(program);
+    
     sf::RenderWindow::display();
     printOpenGLErrors();
 }
@@ -480,197 +481,197 @@ void GraphicsEngine::setYPRCameraOn()
     CameraNumber = 2;
 }
 
-/**
-\brief Turns the light on
+// /**
+// \brief Turns the light on
 
-*/
+// */
 
-void GraphicsEngine::turnLightOn()
-{
-    glUseProgram(program);
-    glUniform1i(glGetUniformLocation(program, "Lt.on"), true);
-}
+// void GraphicsEngine::turnLightOn()
+// {
+//     glUseProgram(program);
+//     glUniform1i(glGetUniformLocation(program, "Lt.on"), true);
+// }
 
-/**
-\brief Turns the light off
+// /**
+// \brief Turns the light off
 
-*/
+// */
 
-void GraphicsEngine::turnLightOff()
-{
-    glUseProgram(program);
-    glUniform1i(glGetUniformLocation(program, "Lt.on"), false);
-}
+// void GraphicsEngine::turnLightOff()
+// {
+//     glUseProgram(program);
+//     glUniform1i(glGetUniformLocation(program, "Lt.on"), false);
+// }
 
-/**
-\brief Loads the light structure to the shader light structure.
+// /**
+// \brief Loads the light structure to the shader light structure.
 
-\param Lt --- Light structure to load.
+// \param Lt --- Light structure to load.
 
-*/
+// */
 
-void GraphicsEngine::loadLight(Light Lt)
-{
-    glUseProgram(program);
+// void GraphicsEngine::loadLight(Light Lt)
+// {
+//     glUseProgram(program);
 
-    glUniform1i(glGetUniformLocation(program, "Lt.on"), Lt.getOn());
-    glUniform4fv(glGetUniformLocation(program, "Lt.position"), 1, glm::value_ptr(Lt.getPosition()));
-    glUniform4fv(glGetUniformLocation(program, "Lt.ambient"), 1, glm::value_ptr(Lt.getAmbient()));
-    glUniform4fv(glGetUniformLocation(program, "Lt.diffuse"), 1, glm::value_ptr(Lt.getDiffuse()));
-    glUniform4fv(glGetUniformLocation(program, "Lt.specular"), 1, glm::value_ptr(Lt.getSpecular()));
-    glUniform3fv(glGetUniformLocation(program, "Lt.spotDirection"), 1, glm::value_ptr(Lt.getSpotDirection()));
-    glUniform3fv(glGetUniformLocation(program, "Lt.attenuation"), 1, glm::value_ptr(Lt.getAttenuation()));
-    glUniform1f(glGetUniformLocation(program, "Lt.spotCutoff"), Lt.getSpotCutoff());
-    glUniform1f(glGetUniformLocation(program, "Lt.spotExponent"), Lt.getSpotExponent());
-}
+//     glUniform1i(glGetUniformLocation(program, "Lt.on"), Lt.getOn());
+//     glUniform4fv(glGetUniformLocation(program, "Lt.position"), 1, glm::value_ptr(Lt.getPosition()));
+//     glUniform4fv(glGetUniformLocation(program, "Lt.ambient"), 1, glm::value_ptr(Lt.getAmbient()));
+//     glUniform4fv(glGetUniformLocation(program, "Lt.diffuse"), 1, glm::value_ptr(Lt.getDiffuse()));
+//     glUniform4fv(glGetUniformLocation(program, "Lt.specular"), 1, glm::value_ptr(Lt.getSpecular()));
+//     glUniform3fv(glGetUniformLocation(program, "Lt.spotDirection"), 1, glm::value_ptr(Lt.getSpotDirection()));
+//     glUniform3fv(glGetUniformLocation(program, "Lt.attenuation"), 1, glm::value_ptr(Lt.getAttenuation()));
+//     glUniform1f(glGetUniformLocation(program, "Lt.spotCutoff"), Lt.getSpotCutoff());
+//     glUniform1f(glGetUniformLocation(program, "Lt.spotExponent"), Lt.getSpotExponent());
+// }
 
-/**
-\brief Loads the material structure to the shader material structure.
+// /**
+// \brief Loads the material structure to the shader material structure.
 
-\param Mat --- Material structure to load.
+// \param Mat --- Material structure to load.
 
-*/
+// */
 
-void GraphicsEngine::loadMaterial(Material Mat)
-{
-    glUseProgram(program);
+// void GraphicsEngine::loadMaterial(Material Mat)
+// {
+//     glUseProgram(program);
 
-    glUniform4fv(glGetUniformLocation(program, "Mat.ambient"), 1, glm::value_ptr(Mat.getAmbient()));
-    glUniform4fv(glGetUniformLocation(program, "Mat.diffuse"), 1, glm::value_ptr(Mat.getDiffuse()));
-    glUniform4fv(glGetUniformLocation(program, "Mat.specular"), 1, glm::value_ptr(Mat.getSpecular()));
-    glUniform4fv(glGetUniformLocation(program, "Mat.emission"), 1, glm::value_ptr(Mat.getEmission()));
-    glUniform1f(glGetUniformLocation(program, "Mat.shininess"), Mat.getShininess());
-}
+//     glUniform4fv(glGetUniformLocation(program, "Mat.ambient"), 1, glm::value_ptr(Mat.getAmbient()));
+//     glUniform4fv(glGetUniformLocation(program, "Mat.diffuse"), 1, glm::value_ptr(Mat.getDiffuse()));
+//     glUniform4fv(glGetUniformLocation(program, "Mat.specular"), 1, glm::value_ptr(Mat.getSpecular()));
+//     glUniform4fv(glGetUniformLocation(program, "Mat.emission"), 1, glm::value_ptr(Mat.getEmission()));
+//     glUniform1f(glGetUniformLocation(program, "Mat.shininess"), Mat.getShininess());
+// }
 
-/**
-\brief Loads a single light into a light array in the shader.
+// /**
+// \brief Loads a single light into a light array in the shader.
 
-\param Lt --- Light to load.
+// \param Lt --- Light to load.
 
-\param name --- The name of the array in the shader.
+// \param name --- The name of the array in the shader.
 
-\param i --- The index of the light to load.
+// \param i --- The index of the light to load.
 
-*/
+// */
 
-void GraphicsEngine::LoadLight(Light Lt, std::string name, int i)
-{
-    glUseProgram(program);
+// void GraphicsEngine::LoadLight(Light Lt, std::string name, int i)
+// {
+//     glUseProgram(program);
 
-    const char* arrayname = name.c_str();  // array name in the shader.
-    char locID[100];
-    sprintf(locID, "%s[%d].%s", arrayname, i, "on");
-    glUniform1i(glGetUniformLocation(program, locID), Lt.getOn());
+//     const char* arrayname = name.c_str();  // array name in the shader.
+//     char locID[100];
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "on");
+//     glUniform1i(glGetUniformLocation(program, locID), Lt.getOn());
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "position");
-    glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getPosition()));
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "position");
+//     glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getPosition()));
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "ambient");
-    glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getAmbient()));
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "ambient");
+//     glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getAmbient()));
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "diffuse");
-    glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getDiffuse()));
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "diffuse");
+//     glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getDiffuse()));
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "specular");
-    glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getSpecular()));
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "specular");
+//     glUniform4fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getSpecular()));
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "spotDirection");
-    glUniform3fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getSpotDirection()));
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "spotDirection");
+//     glUniform3fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getSpotDirection()));
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "attenuation");
-    glUniform3fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getAttenuation()));
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "attenuation");
+//     glUniform3fv(glGetUniformLocation(program, locID), 1, glm::value_ptr(Lt.getAttenuation()));
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "spotCutoff");
-    glUniform1f(glGetUniformLocation(program, locID), Lt.getSpotCutoff());
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "spotCutoff");
+//     glUniform1f(glGetUniformLocation(program, locID), Lt.getSpotCutoff());
 
-    sprintf(locID, "%s[%d].%s", arrayname, i, "spotExponent");
-    glUniform1f(glGetUniformLocation(program, locID), Lt.getSpotExponent());
-}
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "spotExponent");
+//     glUniform1f(glGetUniformLocation(program, locID), Lt.getSpotExponent());
+// }
 
-/**
-\brief Loads the first num entries of a light array to the a light array in the shader.
+// /**
+// \brief Loads the first num entries of a light array to the a light array in the shader.
 
-\param Lt --- Light array to load.
+// \param Lt --- Light array to load.
 
-\param name --- The name of the array in the shader.
+// \param name --- The name of the array in the shader.
 
-\param i --- The number of lights to load.
+// \param i --- The number of lights to load.
 
-*/
+// */
 
-void GraphicsEngine::LoadLights(Light Lt[], std::string name, int num)
-{
-    for (int i = 0; i < num; i++)
-        LoadLight(Lt[i], name.c_str(), i);
-}
+// void GraphicsEngine::LoadLights(Light Lt[], std::string name, int num)
+// {
+//     for (int i = 0; i < num; i++)
+//         LoadLight(Lt[i], name.c_str(), i);
+// }
 
-/**
-\brief Turns the light at index i on.
+// /**
+// \brief Turns the light at index i on.
 
-\param name --- The name of the array in the shader.
+// \param name --- The name of the array in the shader.
 
-\param i --- The index of the light to turn on.
+// \param i --- The index of the light to turn on.
 
-*/
+// */
 
-void GraphicsEngine::turnLightOn(std::string name, int i)
-{
-    glUseProgram(program);
+// void GraphicsEngine::turnLightOn(std::string name, int i)
+// {
+//     glUseProgram(program);
 
-    const char* arrayname = name.c_str();  // array name in the shader.
-    char locID[100];
-    sprintf(locID, "%s[%d].%s", arrayname, i, "on");
-    glUniform1i(glGetUniformLocation(program, locID), true);
-}
+//     const char* arrayname = name.c_str();  // array name in the shader.
+//     char locID[100];
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "on");
+//     glUniform1i(glGetUniformLocation(program, locID), true);
+// }
 
-/**
-\brief Turns the light at index i off.
+// /**
+// \brief Turns the light at index i off.
 
-\param name --- The name of the array in the shader.
+// \param name --- The name of the array in the shader.
 
-\param i --- The index of the light to turn off.
+// \param i --- The index of the light to turn off.
 
-*/
+// */
 
-void GraphicsEngine::turnLightOff(std::string name, int i)
-{
-    glUseProgram(program);
+// void GraphicsEngine::turnLightOff(std::string name, int i)
+// {
+//     glUseProgram(program);
 
-    const char* arrayname = name.c_str();  // array name in the shader.
-    char locID[100];
-    sprintf(locID, "%s[%d].%s", arrayname, i, "on");
-    glUniform1i(glGetUniformLocation(program, locID), false);
-}
+//     const char* arrayname = name.c_str();  // array name in the shader.
+//     char locID[100];
+//     sprintf(locID, "%s[%d].%s", arrayname, i, "on");
+//     glUniform1i(glGetUniformLocation(program, locID), false);
+// }
 
-/**
-\brief Turns the first num lights on.
+// /**
+// \brief Turns the first num lights on.
 
-\param name --- The name of the array in the shader.
+// \param name --- The name of the array in the shader.
 
-\param num --- Number of lights to turn on.
+// \param num --- Number of lights to turn on.
 
-*/
+// */
 
-void GraphicsEngine::turnLightsOn(std::string name, int num)
-{
-    for (int i = 0; i < num; i++)
-        turnLightOn(name.c_str(), i);
-}
+// void GraphicsEngine::turnLightsOn(std::string name, int num)
+// {
+//     for (int i = 0; i < num; i++)
+//         turnLightOn(name.c_str(), i);
+// }
 
-/**
-\brief Turns the first num lights off.
+// /**
+// \brief Turns the first num lights off.
 
-\param name --- The name of the array in the shader.
+// \param name --- The name of the array in the shader.
 
-\param num --- Number of lights to turn off.
+// \param num --- Number of lights to turn off.
 
-*/
+// */
 
-void GraphicsEngine::turnLightsOff(std::string name, int num)
-{
-    for (int i = 0; i < num; i++)
-        turnLightOff(name.c_str(), i);
-}
+// void GraphicsEngine::turnLightsOff(std::string name, int num)
+// {
+//     for (int i = 0; i < num; i++)
+//         turnLightOff(name.c_str(), i);
+// }
 
 /**
 \brief Sets the boolean to draw the axes or not.
@@ -682,6 +683,16 @@ void GraphicsEngine::turnLightsOff(std::string name, int num)
 void GraphicsEngine::setDrawAxes(GLboolean b)
 {
     isDrawAxes = b;
+}
+
+/**
+\brief Toggles the boolean to draw cloudpoints.
+
+*/
+
+void GraphicsEngine::toggleDrawCloudpoints()
+{
+    isDrawCloudpoints = !isDrawCloudpoints;
 }
 
 /**

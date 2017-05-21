@@ -24,6 +24,7 @@
 #include "lib/objects/Models.h"
 #include "lib/objects/MainCar.h"
 #include "lib/objects/BoundingBox.h"
+#include "lib/objects/Gauge.h"
 #include "lib/layouts/SubWindow.h"
 
 /**
@@ -48,6 +49,8 @@ class GraphicsEngine : public sf::RenderWindow {
     private:
         GLenum mode;    ///< Mode, either point, line or fill.
         int sscount;    ///< Screenshot count to be appended to the screenshot filename.
+        bool isDrawCloudpoints = true;
+        const int NUM_LIGHT = 3;
         static const int NUM_SUBWINDOW = 2;
 
         Axes coords;    ///< Axes Object
@@ -67,6 +70,7 @@ class GraphicsEngine : public sf::RenderWindow {
         YPRCamera yprcamera;         ///< Yaw-Pitch-Roll Camera
         int CameraNumber;            ///< Camera number 1 = spherical, 2 = yaw-pitch-roll.
         SphericalCamera LtPos[10];   ///< Spherical "Camera" to control position of the light.
+        Gauge gauge;
 
         Material mat;         ///< Material of the current object.
         Light lt[10];         ///< Light object.
@@ -109,24 +113,26 @@ class GraphicsEngine : public sf::RenderWindow {
         GLboolean isYPRCameraOn();
         void setYPRCameraOn();
 
-        void loadLight(Light Lt);
-        void loadMaterial(Material Mat);
+        // void loadLight(Light Lt);
+        // void loadMaterial(Material Mat);
 
-        void turnLightOn();
-        void turnLightOff();
-        void turnLightOn(std::string name, int i);
-        void turnLightOff(std::string name, int i);
-        void turnLightsOn(std::string name, int num);
-        void turnLightsOff(std::string name, int num);
+        // void turnLightOn();
+        // void turnLightOff();
+        // void turnLightOn(std::string name, int i);
+        // void turnLightOff(std::string name, int i);
+        // void turnLightsOn(std::string name, int num);
+        // void turnLightsOff(std::string name, int num);
 
-        void LoadLights(Light Lt[], std::string name, int num);
-        void LoadLight(Light Lt, std::string name, int i);
+        // void LoadLights(Light Lt[], std::string name, int num);
+        // void LoadLight(Light Lt, std::string name, int i);
 
         void setDrawAxes(GLboolean b);
         void toggleDrawAxes();
 
         void setPlayingVideo(GLboolean b);
         void togglePlayingVideo();
+
+        void toggleDrawCloudpoints();
 
         void setFrameRate(int frameRate);
         int getFrameRate() const;
