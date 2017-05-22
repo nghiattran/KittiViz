@@ -43,9 +43,10 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     boxLoader = BoxLoader::instance();
     dataLoader->attachBoxLoader(boxLoader);
 
+    dataLoader->attachGauge(&gauge);
+
     setupSideWindows();
 
-    gauge.load();
     dataLoader->runWorker();
 
     mainCar.load();
@@ -100,39 +101,39 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     model = glm::mat4(1.0);
     mainCar.setGlobalAmbient(GlobalAmbient);
 
-    // for (int i = 0; i < NUM_LIGHT; i++)
-    //     lt[i].setLight(true,
-    //                    30.0, 30.0, 30.0, 1.0,
-    //                    -1.0, -1.0, -1.0,
-    //                    0.0, 0.0, 0.0, 1.0,
-    //                    0.70, 0.70, 0.70, 1.0,
-    //                    0.70, 0.70, 0.70, 1.0,
-    //                    180.0, 0.0,
-    //                    1.0, 0.0, 0.0
-    //                   );
+    for (int i = 0; i < NUM_LIGHT; i++)
+        lt[i].setLight(true,
+                       30.0, 30.0, 30.0, 1.0,
+                       -1.0, -1.0, -1.0,
+                       0.0, 0.0, 0.0, 1.0,
+                       0.70, 0.70, 0.70, 1.0,
+                       0.70, 0.70, 0.70, 1.0,
+                       180.0, 0.0,
+                       1.0, 0.0, 0.0
+                      );
 
-    // lightobj.createSphereOBJ(0.25, 7, 7);
-    // lightobj.load(0, 1, 2, 3);
-    // lightobj.setColor(1, 1, 0);
-    // lightobj.setDrawBorder(GL_TRUE);
+    lightobj.createSphereOBJ(0.25, 7, 7);
+    lightobj.load(0, 1, 2, 3);
+    lightobj.setColor(1, 1, 0);
+    lightobj.setDrawBorder(GL_TRUE);
 
-    // LtPos[0].setTheta(45);
-    // LtPos[0].setPsi(45);
-    // LtPos[0].setR(15);
+    LtPos[0].setTheta(45);
+    LtPos[0].setPsi(45);
+    LtPos[0].setR(15);
 
-    // LtPos[1].setTheta(100);
-    // LtPos[1].setPsi(-45);
-    // LtPos[1].setR(20);
+    LtPos[1].setTheta(100);
+    LtPos[1].setPsi(-45);
+    LtPos[1].setR(20);
 
-    // LtPos[2].setTheta(-100);
-    // LtPos[2].setPsi(60);
-    // LtPos[2].setR(20);
+    LtPos[2].setTheta(-100);
+    LtPos[2].setPsi(60);
+    LtPos[2].setR(20);
 
-    // for (int i = 0; i < NUM_LIGHT; i++)
-    // {
-    //     lt[i].setPosition(glm::vec4(LtPos[i].getPosition(), 1.0));
-    //     lt[i].setSpotDirection(-LtPos[i].getPosition());
-    // }
+    for (int i = 0; i < NUM_LIGHT; i++)
+    {
+        lt[i].setPosition(glm::vec4(LtPos[i].getPosition(), 1.0));
+        lt[i].setSpotDirection(-LtPos[i].getPosition());
+    }
 
     mainCar.setNumberOfLights(NUM_LIGHT);
     for (int i = 0; i < NUM_LIGHT; i++)
@@ -265,7 +266,7 @@ void GraphicsEngine::display()
     glViewport(0, 0, subwindowSize.x, subwindowSize.y);
     drawSideWindows();
     glUseProgram(program);
-    
+
     sf::RenderWindow::display();
     printOpenGLErrors();
 }

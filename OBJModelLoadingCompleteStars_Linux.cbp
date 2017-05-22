@@ -13,11 +13,17 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-lfreetype" />
+					<Add option="-pthread" />
 					<Add directory="include" />
 					<Add directory="lib/loaders" />
 					<Add directory="lib/utils" />
+					<Add directory="/usr/local/include/freetyp2" />
 				</Compiler>
 				<Linker>
+					<Add option="-pthread" />
+					<Add option="-lfreetype" />
+					<Add option="-I/usr/local/include/freetyp2" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
@@ -89,6 +95,8 @@
 		<Unit filename="lib/objects/OtherCar.h" />
 		<Unit filename="lib/objects/RoadPlane.cpp" />
 		<Unit filename="lib/objects/RoadPlane.h" />
+		<Unit filename="lib/objects/TextRendererTTF.cpp" />
+		<Unit filename="lib/objects/TextRendererTTF.h" />
 		<Unit filename="lib/patterns/Observer.cpp" />
 		<Unit filename="lib/patterns/Observer.h" />
 		<Unit filename="lib/patterns/Subject.cpp" />

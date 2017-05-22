@@ -26,26 +26,39 @@ class BoxLoader
 
     private:
         BoxLoader();
-        static const int NUM_PTS = 8;
+        static BoxLoader* mInstance;
+
+        static const int NUM_PTS = 12;
         std::vector<float> data;
         std::vector<BoundingBox> boxes;
 
-        GLfloat points[8 * 4] = {
+        GLfloat points[NUM_PTS * 4] = {
             -0.5, -0.5, -0.5, 1.0,
-             0.5, -0.5, -0.5, 1.0,
-             0.5,  0.5, -0.5, 1.0,
-            -0.5,  0.5, -0.5, 1.0,
             -0.5, -0.5,  0.5, 1.0,
-             0.5, -0.5,  0.5, 1.0,
-             0.5,  0.5,  0.5, 1.0,
-            -0.5,  0.5,  0.5, 1.0
+            -0.5,  0.5,  0.5, 1.0,
+            -0.5,  0.5, -0.5, 1.0,
+
+            -0.3, -0.5, -0.5, 1.0,
+            -0.3, -0.5,  0.5, 1.0,
+            -0.3,  0.5,  0.5, 1.0,
+            -0.3,  0.5, -0.5, 1.0,
+
+            0.5, -0.5, -0.5, 1.0,
+            0.5, -0.5,  0.5, 1.0,
+            0.5,  0.5,  0.5, 1.0,
+            0.5,  0.5, -0.5, 1.0,
         };            ///< Cube 1x1x1, centered on origin
 
-        GLushort indices[16] = {
+        GLushort indices[32] = {
             0, 1, 2, 3,
             4, 5, 6, 7,
             0, 4, 1, 5,
-            2, 6, 3, 7
+            2, 6, 3, 7,
+
+            4, 5, 6, 7,
+            8, 9, 10, 11,
+            4, 8, 5, 9,
+            6, 10, 7, 11
         };
 
         GLfloat colors[NUM_PTS * 3];

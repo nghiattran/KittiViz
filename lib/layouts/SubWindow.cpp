@@ -2,82 +2,46 @@
 
 SubWindow::SubWindow()
 {
-    texCtrl = TextureController::getInstance();
-
-    texCtrl->useProgram();
-
-    model = glm::rotate(glm::mat4(1.0), 90*degf, glm::vec3(0, 0, 1));
-
-    createTessellatedWallOBJ(1, 0.5, 1, 1);
+    createTessellatedWallOBJ(1, 1, 1, 1);
     load(0, 1, 2, 3);
-    setBorderColor(1, 1, 1);
-    setDrawBorder(true);
 }
 
 SubWindow::~SubWindow()
 {
-    if (texture)
-        delete texture;
-
-    // TODO: fix double delete single
-    // if (texCtrl)
-    //     delete texCtrl;
+    //dtor
 }
 
+
 /**
-\brief Draw window
+\brief Draw road.
+\param nprogram - program that is in used before drawing texture. This make sure everything is reset after draw texture.
 */
 
 void SubWindow::draw()
 {
-    texCtrl->turnTextureOn(texture);
-    texCtrl->setModelMatrix(model);
+    useProgram();
     Models::draw();
-    texCtrl->turnTextureOff(texture);
+}
+
+/**
+\brief Set model matrix.
+\param nmodel - target matrix.
+*/
+
+void SubWindow::setModelMatrix(glm::mat4 nmodel)
+{
+    // Flip image around x axis, to fix flipping error
+    model = glm::rotate(nmodel, 180*degf, glm::vec3(1, 0, 0));
+    TextureController::setModelMatrix(model);
 }
 
 /**
 \brief Set size.
-
-\param h - Height.
-\param w - Width.
+\parame int - number of lanes
 */
 
 void SubWindow::setSize(float h, float w)
 {
     createTessellatedWallOBJ(h, w, 1, 1);
     load(0, 1, 2, 3);
-}
-
-
-void SubWindow::loadTexture(sf::Image img)
-{
-    if (!texture)
-    {
-        texture = texCtrl->createNewTexture(img);
-    } else {
-        texture = texCtrl->updateTexture(texture, img);
-    }
-}
-
-/**
-\brief Set model matrix.
-
-\param nmodel - target matrix.
-
-*/
-
-void SubWindow::setModelMatrix(glm::mat4 nmodel)
-{
-    model = nmodel;
-    texCtrl->setModelMatrix(model);
-}
-
-/**
-\brief Get model matrix.
-*/
-
-const glm::mat4 SubWindow::getModelMatrix()
-{
-    return model;
 }

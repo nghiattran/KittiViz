@@ -22,6 +22,8 @@
 
 #include "../layouts/SubWindow.h"
 #include "../utils/SafeQueue.h"
+#include "../utils/OXT.h"
+#include "../objects/Gauge.h"
 
 class DataLoader
 {
@@ -39,6 +41,7 @@ class DataLoader
         void attachCloudpointLoader(PointsLoader*);
         void attachTextureLoader(SubWindow*);
         void attachBoxLoader(BoxLoader*);
+        void attachGauge(Gauge*);
         void runWorker();
     protected:
     private:
@@ -46,10 +49,10 @@ class DataLoader
 
         char path[100] = "/home/nghia/workplace/data/kitti";
         char date[20] = "2011_09_26";
-        int drive = 1;
+        int drive = 36;
 
         int cnt = 0;
-        int numImages = 802;          ///< Total number of frames in a video.
+        int numImages = 0;          ///< Total number of frames in a video.
         int fps = 10;                ///< Frequency.
         bool isPlayingVideo = false;    ///< Flag indicating if broadcasting image id.
         bool isLoaded = false;          ///< Flag indicating if data is loaded.
@@ -57,6 +60,9 @@ class DataLoader
 
         static DataLoader* mInstance;
         std::thread workerThread;
+
+        std::vector <SafeQueue<OXT>*> oxtQueues;
+        std::vector <Gauge*> oxtObservers;
 
         SafeQueue <std::vector<float>>* cloudpointQueue;
         PointsLoader* cloudpointObserver = NULL;
@@ -82,10 +88,6 @@ class DataLoader
         static void* loadCloudpoints(SafeQueue<std::vector<float>>*, std::string);
         static void* loadTexture(SafeQueue<sf::Image>*, std::string);
         static void* loadBBoxes(SafeQueue<std::vector<BoundingBox>>* queue, std::string filename);
-
-        void loadDataAndNotify(const char* id);
-        static void* loadCloudpointsAndNotify(PointsLoader*, std::string);
-        static void* loadTextureAndNotify(SubWindow*, std::string);
 
         static std::vector<float> readBin(const char *filename);   ///< Load binary vector from bin file.
         static void* runWorkerThread(DataLoader* dl, bool& isStop, int numImages, int startID);

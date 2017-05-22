@@ -1,5 +1,6 @@
 #include "BoxLoader.h"
 
+BoxLoader* BoxLoader::mInstance = NULL;
 
 BoxLoader::BoxLoader()
 {
@@ -11,16 +12,16 @@ BoxLoader::BoxLoader()
 
     for (uint i = 0; i < NUM_PTS; i++)
     {
-        if (points[i*4] < 0)
+        if (points[i*4] < -0.45)
         {
             colors[i * 3] = 1;
             colors[i * 3 + 1] = 0;
             colors[i * 3 + 2] = 0;
-        } 
+        }
         else
         {
-            colors[i * 3] = 0;
-            colors[i * 3 + 1] = 0;
+            colors[i * 3] = 1;
+            colors[i * 3 + 1] = 1;
             colors[i * 3 + 2] = 1;
         }
     }
@@ -44,14 +45,11 @@ Create a singleton object of DataLoader.
 */
 
 BoxLoader* BoxLoader::instance() {
-    return new BoxLoader();
-
-    // TODO: FIX. something goes wrong with singleton
-    // if (!s_instance)
-    // {
-    //     s_instance = new DataLoader();
-    // }
-    // return s_instance;
+    if (!mInstance)
+    {
+        mInstance = new BoxLoader();
+    }
+    return mInstance;
 }
 
 void BoxLoader::LoadDataToGraphicsCard()
@@ -78,7 +76,7 @@ void BoxLoader::LoadDataToGraphicsCard()
 
 void BoxLoader::draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view)
 {
-    glLineWidth(5);
+    glLineWidth(3);
     for (int i = 0; i < boxes.size(); i++)
     {
         glm::mat4 boxModel = boxes[i].getModelMatrix();
@@ -90,6 +88,9 @@ void BoxLoader::draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view)
         glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_SHORT, 0);
         glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_SHORT, (GLvoid*)(4*sizeof(GLushort)));
         glDrawElements(GL_LINES, 8, GL_UNSIGNED_SHORT, (GLvoid*)(8*sizeof(GLushort)));
+
+        glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_SHORT, (GLvoid*)(20*sizeof(GLushort)));
+        glDrawElements(GL_LINES, 8, GL_UNSIGNED_SHORT, (GLvoid*)(24*sizeof(GLushort)));
     }
 }
 

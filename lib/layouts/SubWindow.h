@@ -16,33 +16,21 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../objects/Models.h"
-#include "../utils/LoadShaders.h"
 #include "../utils/TextureController.h"
-#include "../utils/Texture.h"
 
-class SubWindow : public Models
+class SubWindow : public TextureController, Models
 {
     public:
         SubWindow();
         ~SubWindow();
 
         void draw();
-        void setModelMatrix(glm::mat4 nmodel);
         const glm::mat4 getModelMatrix();
-
+        void setModelMatrix(glm::mat4 nmodel) override;
         void setSize(float h, float w);
-
-        void loadTexture(sf::Image texture);
     protected:
     private:
-        static int counter;
-        static const int OFFSET = 30;
-        glm::mat4 model;
-
-        TextureController* texCtrl = NULL;
-        Texture* texture = NULL;
 
         void update(const char * data);       ///< Implementation of observer pattern.
 };
-
 #endif // SubWindow_H

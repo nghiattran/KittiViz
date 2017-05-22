@@ -1,12 +1,9 @@
 #include "TextureController.h"
 
-TextureController* TextureController::mInstance = NULL;
-int TextureController::cnt = 0;
-
 TextureController::TextureController()
 {
     //  Load the shaders
-    program = LoadShadersFromFile("Shaders/VertexShaderLightingTextureEnvMap.glsl", "Shaders/PhongMultipleLightsAndTextureEnvMap.glsl");
+    program = LoadShadersFromFile("Shaders/VertexShaderBasicTexture.glsl", "Shaders/SimpleTexture.glsl");
 
     if (!program)
     {
@@ -16,47 +13,35 @@ TextureController::TextureController()
 
     // Turn on the shader & get location of transformation matrix.
     glUseProgram(program);
-
-    glActiveTexture(GL_TEXTURE0);
-    glUniform1i(glGetUniformLocation(program, "cmtex"), 0);
-
     PVMLoc = glGetUniformLocation(program, "PVM");
-    ModelLoc = glGetUniformLocation(program, "Model");
-    NormalLoc = glGetUniformLocation(program, "NormalMatrix");
+    useTextureLoc = glGetUniformLocation(program, "useTexture");
     texTransLoc = glGetUniformLocation(program, "textrans");
+    tex1Loc = glGetUniformLocation(program, "tex1");
 
-    glGenTextures(5, texID);
-
-    glUniformMatrix4fv(ModelLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0)));
+    glm::mat4 model = glm::rotate(glm::mat4(1.0), 90*degf, glm::vec3(0, 0, 1));
+    glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniform1i(useTextureLoc, true);
     glUniformMatrix4fv(texTransLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0)));
-    glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0)));
 
-    // float scaleFactor = 0.1;
-    // setModelMatrix(glm::scale(glm::mat4(1.0), glm::vec3(scaleFactor, scaleFactor, scaleFactor)));
+    glGenTextures(1, &texID);
+    turnOnTexture();
+
+    // Load placeholder texture
+    loadTextureFromFile("Textures/Repeat-brick.jpg");
 }
+
 
 TextureController::~TextureController()
 {
     //dtor
 }
 
-
-TextureController* TextureController::getInstance()
-{
-    if (!mInstance)
-    {
-        mInstance = new TextureController();
-    }
-    return mInstance;
-}
-
 /**
 \brief Load texture to subwindow from file.
-
 \parame filename - name of texture file.
 */
 
-sf::Image TextureController::loadTextureFromFile(const char* filename)
+void TextureController::loadTextureFromFile(const char* filename)
 {
     sf::Image texture;
     bool texloaded = texture.loadFromFile(filename);
@@ -67,66 +52,31 @@ sf::Image TextureController::loadTextureFromFile(const char* filename)
         exit(EXIT_FAILURE);
     }
 
-    return texture;
+    loadTexture(texture);
 }
 
-Texture* TextureController::createNewTexture(sf::Image img)
-{
-    glUseProgram(program);
-    Texture* texture = new Texture(program, cnt);
+/**
+\brief Load texture.
+\parame texture - texture object.
+*/
 
-    updateTexture(texture, img);
-
-    cnt++;
-    return texture;
-}
-
-Texture* TextureController::updateTexture(Texture* texture, sf::Image img)
+void TextureController::loadTexture(sf::Image texture)
 {
     glUseProgram(program);
 
-    GLuint texLoc = texture->getTextureLoc();
-    int index = texture->getIndex();
-
-    glUniform1i(texLoc, texID[index]);
+    //  Link the texture to the shader.
+    GLuint tex1_uniform_loc = glGetUniformLocation(program, "tex1");
+    glUniform1i(tex1Loc, texID);
 
     //  Load the texture into texture memory.
-    glActiveTexture(GL_TEXTURE0+texID[index]);
-    glBindTexture(GL_TEXTURE_2D, texID[index]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.getSize().x, img.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, img.getPixelsPtr());
+    glActiveTexture(GL_TEXTURE0 + texID);
+    glBindTexture(GL_TEXTURE_2D, texID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.getSize().x, texture.getSize().y, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.getPixelsPtr());
     glGenerateMipmap(GL_TEXTURE_2D);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    return texture;
-}
-
-/**
-\brief Turns a texture off.
-
-\param tex --- The texture to be turned off.
-
-*/
-
-void TextureController::turnTextureOff(Texture* tex)
-{
-    glUseProgram(program);
-    glUniform1i(tex->getUseTextureLoc(), false);
-}
-
-/**
-\brief Turns a texture on.
-
-\param tex --- The texture to be turned on.
-
-*/
-
-void TextureController::turnTextureOn(Texture* tex)
-{
-    glUseProgram(program);
-    glUniform1i(tex->getUseTextureLoc(), true);
 }
 
 /**
@@ -136,18 +86,51 @@ void TextureController::turnTextureOn(Texture* tex)
 
 */
 
-void TextureController::setModelMatrix(glm::mat4 model)
+void TextureController::setModelMatrix(glm::mat4 nmodel)
 {
+    model = nmodel;
     glUseProgram(program);
-    glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(nmodel));
+}
+
+
+/**
+\brief Get model matrix.
+*/
+
+const glm::mat4 TextureController::getModelMatrix()
+{
+    return model;
 }
 
 /**
-\brief Set model matrix.
+\brief Activate program.
 
 */
 
 void TextureController::useProgram()
 {
     glUseProgram(program);
+}
+
+/**
+\brief Turn on texture for this program.
+
+*/
+
+void TextureController::turnOnTexture()
+{
+    glUseProgram(program);
+    glUniform1i(useTextureLoc, true);
+}
+
+/**
+\brief Turn off texture for this program.
+
+*/
+
+void TextureController::turnOffTexture()
+{
+    glUseProgram(program);
+    glUniform1i(useTextureLoc, false);
 }

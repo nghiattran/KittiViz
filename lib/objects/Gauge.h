@@ -2,9 +2,6 @@
 #define GAUGE_H
 
 #include <GL/glew.h>
-#include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
-#include <SFML/System.hpp>
 #include <iostream>
 #include <string>
 #include <stdio.h>
@@ -15,42 +12,38 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../objects/Models.h"
+#include "../objects/Circle.h"
+#include "../objects/Ruler.h"
+#include "../objects/TextRendererTTF.h"
 #include "../utils/ProgramDefines.h"
 #include "../utils/LoadShaders.h"
-#include "../utils/TextureController.h"
 #include "../utils/Texture.h"
+#include "../utils/OXT.h"
+#include "../utils/TextureController.h"
 
-class Gauge : public Models {
-  public:
-      Gauge();
-      ~Gauge();
+class Gauge : public TextureController {
+    public:
+        Gauge();
+        ~Gauge();
 
-      void setRadius(int r);
-      void draw();
-      void load();
-      void LoadDataToGraphicsCard();
-      void setModelMatrix(glm::vec3, glm::vec3, glm::vec3, float);
-      void setScale(glm::vec3);
-      void setTranformation(glm::vec3);
-      void setRotation(glm::vec3, float);
-  protected:
-  private:
-      const int NUM_PTS = 4;
-      bool isLoaded = false;
+        void draw();
+        Circle* base;
+        Circle* outerRing;
+        Circle* innerRing;
+        Ruler* ruler;
 
-      GLuint vboptr;  ///< ID for faces VBO.
-      GLuint eboptr;  ///< ID for faces index array.
-      GLuint bufptr;  ///< ID for faces array buffer.
+        void setSpeed(int s);
+        int getSpeed();
 
-      glm::mat4 model;
-      glm::vec3 scale = glm::vec3(0.2);
-      glm::vec3 transformation = glm::vec3(0);
-      float rotAngle = 0;
-      glm::vec3 rotVector = glm::vec3(0, 0, 1);
+        void update(OXT oxt);
+    protected:
+    private:
+        glm::mat4 levels[10];
+        int speed = 0;
+        const int MAX_SPEED = 160;
+        TextRendererTTF text;
 
-      TextureController* texCtrl = NULL;
-      Texture* texture = NULL;
+        // void PlotText(TextRenderer tr, std::string s);
 };
 
 #endif // GAUGE_H

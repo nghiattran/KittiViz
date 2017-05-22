@@ -14,40 +14,36 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
 #include "../utils/LoadShaders.h"
-#include "../utils/Texture.h"
+#include "../utils/ProgramDefines.h"
 
 class TextureController
 {
     public:
-        static TextureController* getInstance();
+        TextureController();
         ~TextureController();
 
-        Texture* createNewTexture(sf::Image texture);
-        Texture* updateTexture(Texture* texture, sf::Image img);
-        void turnTextureOff(Texture* tex);
-        void turnTextureOn(Texture* tex);
-        void setModelMatrix(glm::mat4 model);
-        static sf::Image loadTextureFromFile(const char* filename);
+        virtual void setModelMatrix(glm::mat4 model);
+        const glm::mat4 getModelMatrix();
+
+        void loadTextureFromFile(const char* filename);
+        void loadTexture(sf::Image texture);
+        
         void useProgram();
+
+        void turnOnTexture();
+        void turnOffTexture();
     protected:
-
+        glm::mat4 model;
     private:
-        static TextureController* mInstance;
-
-        TextureController();
-
-        static int cnt;
-        static const int TEXTURE_NUM = 10;
-        GLuint texID[TEXTURE_NUM];
-
+        GLuint tex1Loc;        ///< Location ID of the texture in the shader.
         GLuint PVMLoc;         ///< Location ID of the PVM matrix in the shader.
+
         GLuint texTransLoc;    ///< Location ID of the texture transformation matrix in the shader.
         GLuint useTextureLoc;  ///< Location ID of the texture use flag in the shader.
-        GLuint NormalLoc;
-        GLuint ModelLoc;
         GLuint program;        ///< ID of the shader program.
+
+        GLuint texID;
 };
 
 #endif // TEXTURECONTROLLER_H
