@@ -175,7 +175,7 @@
 	"GraphicsEngine.h"
 	"UI.h"
 
-1495376805 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.h
+1495518106 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -186,7 +186,6 @@
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
-	"teapot.h"
 	"lib/objects/Axes.h"
 	"lib/loaders/PointsLoader.h"
 	"lib/loaders/DataLoader.h"
@@ -196,8 +195,9 @@
 	"lib/objects/Models.h"
 	"lib/objects/MainCar.h"
 	"lib/objects/BoundingBox.h"
-	"lib/objects/Gauge.h"
+	"lib/objects/Speedometer.h"
 	"lib/layouts/SubWindow.h"
+	"lib/utils/Screen.h"
 
 1458515816 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/SphericalCamera.h
 	<glm/glm.hpp>
@@ -261,13 +261,13 @@
 1494542228 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/SphericalCamera.cpp
 	"SphericalCamera.h"
 
-1495166998 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/UI.cpp
+1495518093 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/UI.cpp
 	"UI.h"
 
 1456708854 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/YPRCamera.cpp
 	"YPRCamera.h"
 
-1495413249 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.cpp
+1495519572 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/GraphicsEngine.cpp
 	"GraphicsEngine.h"
 
 1494370468 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/include/MainCar.h
@@ -513,7 +513,7 @@
 	<GL/gl.h>
 	<string>
 
-1495417853 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
+1495520034 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -604,10 +604,10 @@
 1495061309 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Axes.cpp
 	"Axes.h"
 
-1495430619 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.cpp
+1495515751 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.cpp
 	"Gauge.h"
 
-1495430604 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.h
+1495515366 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Gauge.h
 	<GL/glew.h>
 	<iostream>
 	<string>
@@ -703,7 +703,7 @@
 1495431447 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/BoundingBox.cpp
 	"BoundingBox.h"
 
-1495432580 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.cpp
+1495518118 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.cpp
 	"BoxLoader.h"
 
 1495432610 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/BoxLoader.h
@@ -1785,10 +1785,10 @@
 1495404328 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/TextRenderer.cpp
 	"TextRenderer.h"
 
-1495406612 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/TextRendererTTF.cpp
+1495494281 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/TextRendererTTF.cpp
 	"TextRendererTTF.h"
 
-1495407408 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/TextRendererTTF.h
+1495504637 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/TextRendererTTF.h
 	<GL/glew.h>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -1796,6 +1796,8 @@
 	<string>
 	<iostream>
 	<fstream>
+	<ft2build.h>
+	"LoadShaders.h"
 
 1495418222 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/OXT.h
 	<iostream>
@@ -1807,7 +1809,7 @@
 	<string>
 	<fstream>
 
-1495430479 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Circle.h
+1495515209 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Circle.h
 	<GL/glew.h>
 	<iostream>
 	<string>
@@ -1828,18 +1830,35 @@
 1495422364 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Ruler.cpp
 	"Ruler.h"
 
-1495430421 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Ruler.h
+1495517932 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Ruler.h
 	<GL/glew.h>
 	<iostream>
 	<string>
 	<stdio.h>
 	<math.h>
+	<vector>
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
+	<glm/ext.hpp>
 	"../objects/Models.h"
 	"../objects/Circle.h"
 	"../objects/TextRendererTTF.h"
 	"../utils/ProgramDefines.h"
 	"../utils/LoadShaders.h"
+	"../utils/Screen.h"
+
+1495519373 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Speedometer.h
+	<typeinfo>
+	"../objects/Gauge.h"
+
+1495519406 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Speedometer.cpp
+	"Speedometer.h"
+
+1495511889 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/Screen.h
+	<cstddef>
+	<stdio.h>
+
+1495512121 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/utils/Screen.cpp
+	"Screen.h"
 

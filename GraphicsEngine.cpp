@@ -35,6 +35,8 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     isPlaying = GL_FALSE;
     fps = 5;
 
+    screen = Screen::getInstance();
+
     dataLoader = DataLoader::getInstance();
 
     pointsLoader = PointsLoader::getInstance();
@@ -43,7 +45,7 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     boxLoader = BoxLoader::instance();
     dataLoader->attachBoxLoader(boxLoader);
 
-    dataLoader->attachGauge(&gauge);
+    dataLoader->attachGauge(&speedometer);
 
     setupSideWindows();
 
@@ -218,8 +220,15 @@ void GraphicsEngine::display()
     glm::mat4 up = glm::rotate(model, 90*degf, glm::vec3(1, 0, 0));
 
     sf::Vector2u size = getSize();
+    if (size.x != 1500 || size.y != 800)
+    {
+        setSize(1500, 800);
+    }
+
     sf::Vector2u subwindowSize = sf::Vector2u(size.x, 200);
     glViewport(0, subwindowSize.y, size.x, size.y - subwindowSize.y);
+
+    screen->update(size.y, size.x);
 
     // Set view matrix via current camera.
     glm::mat4 view(1.0);
@@ -249,7 +258,7 @@ void GraphicsEngine::display()
         pointsLoader->draw();
     boxLoader->draw(PVMLoc, projection, view);
 
-    gauge.draw();
+    speedometer.draw();
     glUseProgram(program);
 
     // Look at the main vehicle
@@ -684,6 +693,16 @@ void GraphicsEngine::setYPRCameraOn()
 void GraphicsEngine::setDrawAxes(GLboolean b)
 {
     isDrawAxes = b;
+}
+
+/**
+\brief Toggles speed unit in speedometer.
+
+*/
+
+void GraphicsEngine::toggleSpeedUnit()
+{
+    speedometer.toggleUnit();
 }
 
 /**

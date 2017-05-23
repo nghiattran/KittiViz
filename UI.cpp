@@ -192,6 +192,10 @@ void UI::keyPressed(sf::Event::KeyEvent keyevent)
         ge->toggleDrawCloudpoints();
         break;
 
+    case sf::Keyboard::X:
+        ge->toggleSpeedUnit();
+        break;
+
     default:
         break;
     }

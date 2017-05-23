@@ -6,23 +6,28 @@
 #include <string>
 #include <stdio.h>
 #include <math.h>
+#include <vector>
 
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 
 #include "../objects/Models.h"
 #include "../objects/Circle.h"
 #include "../objects/TextRendererTTF.h"
 #include "../utils/ProgramDefines.h"
 #include "../utils/LoadShaders.h"
+#include "../utils/Screen.h"
 
 class Ruler
 {
     public:
-        Ruler(float mradius, float mgap, int mpts, float mfanAngle, Color mcolor, FadeStrategy* mfadeStrategy)
+        Ruler(float mradius, float mgap, int mpts, float mfanAngle, Color mcolor, FadeStrategy mfadeStrategy)
         {
+            screen = Screen::getInstance();
+
             radius = mradius;
             gap = mgap;
             color = mcolor;
@@ -42,10 +47,24 @@ class Ruler
             glBindVertexArray(vboptr);
             glDeleteBuffers(1, &bufptr);
             glDeleteBuffers(1, &eboptr);
+            delete screen;
+        }
 
-            // TODO: fix delete shared pointer 
-            // if (fadeStrategy)
-            //     delete fadeStrategy;
+        void loadTexts(glm::mat4 mlocation)
+        {
+            location = mlocation;
+
+            textVector.clear();
+
+            int numTexts = pts / SEPARATOR_RATE + 1;
+            for (int i = 0; i < numTexts; i++)
+            {
+                TextRendererTTF text = TextRendererTTF("fonts/Tunga Bold.ttf");
+                text.setFontSize(100);
+                text.setColor(1, 1, 1, 1);
+
+                textVector.push_back(text);
+            }
         }
 
         void draw()
@@ -53,6 +72,34 @@ class Ruler
             glBindVertexArray(vboptr);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboptr);
             glDrawElements(GL_TRIANGLES, pts * 3, GL_UNSIGNED_SHORT, NULL);
+
+            // int height = screen->getHeight();
+            // int width = screen->getWidth();
+            // float screenRatio = (float) height / width;
+            // float radius = 0.27;
+
+            // for (int i = 0; i < textVector.size(); ++i)
+            // {
+            //     int reverseIndex = textVector.size() - 1 - i;
+            //     std::string value = std::to_string(reverseIndex * SEPARATOR_RATE);
+            //     int textWidth = textVector[i].textWidth(value);
+            //     textWidth = 0;
+
+            //     float phi = i * fanAngle / (textVector.size() - 1);
+            //     float xpos = radius * cos(phi + 110*degf) * screenRatio;
+            //     float ypos = radius * sin(phi + 110*degf);
+
+            //     printf("%d %f\n", i, (phi + 110*degf) / PI *180);
+
+            //     glm::mat4 textModel = location;
+            //     textModel = glm::translate(textModel, glm::vec3(xpos - textWidth /1000, ypos, -0.1));
+            //     // textModel = glm::rotate(textModel, 180*degf - (phi + 110*degf), glm::vec3(0, 0, 1));
+            //     textModel = glm::rotate(textModel, phi - 75*degf, glm::vec3(0, 0, 1));
+            //     textModel = glm::scale(textModel, glm::vec3(.0004));
+
+            //     textVector[i].setModelMatrix(textModel);
+            //     textVector[i].draw(value);
+            // }
         }
 
         void setLightingAngle(float angle)
@@ -65,15 +112,23 @@ class Ruler
         {
             return fanAngle;
         }
+
     private:
         float radius;
         float gap;
-        Color color;
         int pts;
         float fanAngle;
         float lightingAngle = 0;
+        const int SEPARATOR_RATE = 20;
+        glm::mat4 location;
 
-        FadeStrategy* fadeStrategy;
+        std::vector<TextRendererTTF> textVector = std::vector<TextRendererTTF>();
+
+        Screen* screen;
+
+        Color color;
+        FadeStrategy fadeStrategy;
+
         GLuint vboptr;  ///< ID for faces VBO.
         GLuint eboptr;  ///< ID for faces index array.
         GLuint bufptr;  ///< ID for faces array buffer.
@@ -113,7 +168,7 @@ class Ruler
             {
                 float phi = i * fanAngle / (pts - 1);
 
-                float nr2 = i % 20 == 0 || i % 20 == 1 ? r2 * 0.9 : r2;
+                float nr2 = i % SEPARATOR_RATE == 0 || i % SEPARATOR_RATE == 1 ? r2 * 0.9 : r2;
 
                 points[i * 8] = r1 * sin(phi);
                 points[i * 8 + 1] = r1 * cos(phi);
@@ -135,7 +190,7 @@ class Ruler
                 colors[i * 4] = color.red * dimFactor;
                 colors[i * 4 + 1] = color.green * dimFactor;
                 colors[i * 4 + 2] = color.blue * dimFactor;
-                colors[i * 4 + 3] = fadeStrategy->getAlpha(i, pts);
+                colors[i * 4 + 3] = fadeStrategy.getAlpha(i, pts);
             }
 
             glGenVertexArrays(1, &vboptr);

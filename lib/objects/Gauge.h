@@ -23,27 +23,23 @@
 
 class Gauge : public TextureController {
     public:
-        Gauge();
+        Gauge(Color color);
+        Gauge(Circle* c1, Circle* c2, Circle* c3);
         ~Gauge();
 
         void draw();
+        virtual void update(OXT oxt) = 0;
+    protected:
+        glm::mat4 location;
+        glm::mat4 levels[10];
+    private:
         Circle* base;
         Circle* outerRing;
         Circle* innerRing;
-        Ruler* ruler;
 
-        void setSpeed(int s);
-        int getSpeed();
+        Screen* screen;
 
-        void update(OXT oxt);
-    protected:
-    private:
-        glm::mat4 levels[10];
-        int speed = 0;
-        const int MAX_SPEED = 160;
-        TextRendererTTF text;
-
-        // void PlotText(TextRenderer tr, std::string s);
+        void init();
 };
 
 #endif // GAUGE_H

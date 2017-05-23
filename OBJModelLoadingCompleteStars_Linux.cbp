@@ -13,20 +13,19 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-lfreetype" />
 					<Add option="-pthread" />
 					<Add directory="include" />
 					<Add directory="lib/loaders" />
 					<Add directory="lib/utils" />
-					<Add directory="/usr/local/include/freetyp2" />
+					<Add directory="lib/objects" />
 				</Compiler>
 				<Linker>
 					<Add option="-pthread" />
-					<Add option="-lfreetype" />
-					<Add option="-I/usr/local/include/freetyp2" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add library="freetype" />
+					<Add directory="freetype2" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -39,6 +38,7 @@
 					<Add directory="include" />
 					<Add directory="lib/loaders" />
 					<Add directory="lib/utils" />
+					<Add directory="lib/objects" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -81,6 +81,8 @@
 		<Unit filename="lib/objects/BoundingBox.h" />
 		<Unit filename="lib/objects/Car.cpp" />
 		<Unit filename="lib/objects/Car.h" />
+		<Unit filename="lib/objects/Circle.cpp" />
+		<Unit filename="lib/objects/Circle.h" />
 		<Unit filename="lib/objects/Gauge.cpp" />
 		<Unit filename="lib/objects/Gauge.h" />
 		<Unit filename="lib/objects/Light.cpp" />
@@ -95,6 +97,8 @@
 		<Unit filename="lib/objects/OtherCar.h" />
 		<Unit filename="lib/objects/RoadPlane.cpp" />
 		<Unit filename="lib/objects/RoadPlane.h" />
+		<Unit filename="lib/objects/Ruler.cpp" />
+		<Unit filename="lib/objects/Ruler.h" />
 		<Unit filename="lib/objects/TextRendererTTF.cpp" />
 		<Unit filename="lib/objects/TextRendererTTF.h" />
 		<Unit filename="lib/patterns/Observer.cpp" />
@@ -106,6 +110,8 @@
 		<Unit filename="lib/utils/Material.cpp" />
 		<Unit filename="lib/utils/Material.h" />
 		<Unit filename="lib/utils/MaterialPresets.h" />
+		<Unit filename="lib/utils/OXT.cpp" />
+		<Unit filename="lib/utils/OXT.h" />
 		<Unit filename="lib/utils/ProgramDefines.h" />
 		<Unit filename="lib/utils/SafeQueue.cpp" />
 		<Unit filename="lib/utils/SafeQueue.h" />

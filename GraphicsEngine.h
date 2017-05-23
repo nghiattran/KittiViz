@@ -14,7 +14,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "teapot.h"
 #include "lib/objects/Axes.h"
 #include "lib/loaders/PointsLoader.h"
 #include "lib/loaders/DataLoader.h"
@@ -24,8 +23,9 @@
 #include "lib/objects/Models.h"
 #include "lib/objects/MainCar.h"
 #include "lib/objects/BoundingBox.h"
-#include "lib/objects/Gauge.h"
+#include "lib/objects/Speedometer.h"
 #include "lib/layouts/SubWindow.h"
+#include "lib/utils/Screen.h"
 
 /**
 \file GraphicsEngine.h
@@ -57,6 +57,7 @@ class GraphicsEngine : public sf::RenderWindow {
         PointsLoader* pointsLoader;      ///< Object to load velodyne cloud points.
         DataLoader* dataLoader;          ///< Object to control all data processing.
         BoxLoader* boxLoader;            ///< Object to control all bouding boxes.
+        Screen* screen;
 
         GLuint ModelLoc;       ///< Location ID of the Model matrix in the shader.
         GLuint NormalLoc;      ///< Location ID of the Normal matrix in the shader.
@@ -70,7 +71,7 @@ class GraphicsEngine : public sf::RenderWindow {
         YPRCamera yprcamera;         ///< Yaw-Pitch-Roll Camera
         int CameraNumber;            ///< Camera number 1 = spherical, 2 = yaw-pitch-roll.
         SphericalCamera LtPos[10];   ///< Spherical "Camera" to control position of the light.
-        Gauge gauge;
+        Speedometer speedometer;
 
         Material mat;         ///< Material of the current object.
         Light lt[10];         ///< Light object.
@@ -133,6 +134,7 @@ class GraphicsEngine : public sf::RenderWindow {
         void togglePlayingVideo();
 
         void toggleDrawCloudpoints();
+        void toggleSpeedUnit();
 
         void setFrameRate(int frameRate);
         int getFrameRate() const;
