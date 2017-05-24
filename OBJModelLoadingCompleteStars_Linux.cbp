@@ -99,6 +99,8 @@
 		<Unit filename="lib/objects/RoadPlane.h" />
 		<Unit filename="lib/objects/Ruler.cpp" />
 		<Unit filename="lib/objects/Ruler.h" />
+		<Unit filename="lib/objects/Speedometer.cpp" />
+		<Unit filename="lib/objects/Speedometer.h" />
 		<Unit filename="lib/objects/TextRendererTTF.cpp" />
 		<Unit filename="lib/objects/TextRendererTTF.h" />
 		<Unit filename="lib/patterns/Observer.cpp" />
@@ -115,6 +117,8 @@
 		<Unit filename="lib/utils/ProgramDefines.h" />
 		<Unit filename="lib/utils/SafeQueue.cpp" />
 		<Unit filename="lib/utils/SafeQueue.h" />
+		<Unit filename="lib/utils/Screen.cpp" />
+		<Unit filename="lib/utils/Screen.h" />
 		<Unit filename="lib/utils/Texture.cpp" />
 		<Unit filename="lib/utils/Texture.h" />
 		<Unit filename="lib/utils/TextureController.cpp" />

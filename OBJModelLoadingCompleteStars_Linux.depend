@@ -513,7 +513,7 @@
 	<GL/gl.h>
 	<string>
 
-1495520034 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
+1495542826 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/DataLoader.h
 	<GL/glew.h>
 	<SFML/Graphics.hpp>
 	<SFML/OpenGL.hpp>
@@ -1830,7 +1830,7 @@
 1495422364 source:/home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Ruler.cpp
 	"Ruler.h"
 
-1495517932 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Ruler.h
+1495553451 /home/nghia/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/objects/Ruler.h
 	<GL/glew.h>
 	<iostream>
 	<string>
