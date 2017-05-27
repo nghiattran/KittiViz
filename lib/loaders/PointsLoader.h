@@ -22,16 +22,17 @@
 #include "../patterns/Observer.h"
 #include "../utils/ProgramDefines.h"
 #include "../utils/LoadShaders.h"
+#include "../data/CloudPoints.h"
 
-class PointsLoader
+class PointsLoader : public Observer<CloudPoints>
 {
     public:
         ~PointsLoader();
         static PointsLoader* getInstance();
 
         void draw();
+        void update(CloudPoints);
 
-        void LoadDataToGraphicsCard(const char *filename);
         void LoadDataToGraphicsCard(std::vector<float>);
     protected:
     private:
@@ -47,8 +48,6 @@ class PointsLoader
         GLuint vboptr;  ///< ID for faces VBO.
         GLuint eboptr;  ///< ID for faces index array.
         GLuint bufptr;  ///< ID for faces array buffer.
-
-        std::vector<float> readBin(const char *filename);   ///< Load binary vector from bin file.
 };
 
 #endif // POINTSLOADER_H

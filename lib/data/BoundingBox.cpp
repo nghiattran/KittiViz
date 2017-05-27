@@ -1,6 +1,5 @@
 #include "BoundingBox.h"
 
-
 BoundingBox::BoundingBox(char type[], glm::vec3 s, glm::vec3 t, float r)
 {
     setData(type, s, t, r);

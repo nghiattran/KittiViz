@@ -12,6 +12,7 @@ DataLoader::DataLoader()
         printf("Wrong path: %s\n", folderPath);
         exit(1);
     }
+
     numImages = 0;
     struct dirent *dirp;
     while (dirp = readdir(dp)) {
@@ -23,8 +24,10 @@ DataLoader::DataLoader()
         numImages++;
     }
 
-    cloudpointQueue = new SafeQueue <std::vector<float>>();
-    bboxQueue = new SafeQueue <std::vector<BoundingBox>>();
+    cloudpointQueue = new SafeQueue<CloudPoints>();
+    imageQueue = new SafeQueue<ImageData>();
+    bboxQueue = new SafeQueue<BoxList>();
+    oxtQueue = new SafeQueue<OXT>();
 }
 
 DataLoader::~DataLoader()
@@ -35,11 +38,11 @@ DataLoader::~DataLoader()
         workerThread.join();
     }
 
+    // Deallocate memory
     delete cloudpointQueue;
-    for (uint i = 0; i < textureQueues.size(); i++) {
-        delete textureQueues[i];
-    }
+    delete imageQueue;
     delete bboxQueue;
+    delete oxtQueue;
 }
 
 /**
@@ -58,24 +61,14 @@ DataLoader* DataLoader::getInstance() {
 }
 
 void DataLoader::nextID() {
-
-
     if (isPlayingVideo)
         cnt = (cnt + 1) % (numImages * (60 / fps));
 
     if ((cnt % (60 / fps) == 0 && isPlayingVideo) || !isLoaded)
     {
-
-        // char id[300];
-        // sprintf(id, "%010d", cnt / (60 / fps));
-        // const char* constId = &id[0];
-
-        // loadDataByThread(constId);
-
         notify();
+        isLoaded = true;
     }
-
-    isLoaded = true;
 }
 
 /**
@@ -100,50 +93,44 @@ void DataLoader::setFPS(int nfps) {
     fps = nfps;
 }
 
-
 /**
-\brief Attach a CloudpointLoader to this object.
+\brief Attach a BoxList listener to this object.
 
 \param observer
 */
 
-void DataLoader::attachCloudpointLoader(PointsLoader* observer) {
-    cloudpointObserver = observer;
+void DataLoader::attach(Observer<BoxList>* observer) {
+    bboxObservers.push_back(observer);
 }
 
 /**
-\brief Attach a BoxLoader to this object.
+\brief Attach a CloudPoints listener to this object.
 
 \param observer
 */
 
-void DataLoader::attachBoxLoader(BoxLoader* observer) {
-    bboxObserver = observer;
+void DataLoader::attach(Observer<CloudPoints>* observer) {
+    cloudpointObservers.push_back(observer);
 }
 
 /**
-\brief Attach a Gauge to this object.
+\brief Attach a ImageData listener to this object.
 
 \param observer
 */
 
-void DataLoader::attachGauge(Gauge* g)
-{
-    oxtObservers.push_back(g);
-    SafeQueue<OXT>* queue = new SafeQueue<OXT>();
-    oxtQueues.push_back(queue);
+void DataLoader::attach(Observer<ImageData>* observer) {
+    imageObservers.push_back(observer);
 }
 
 /**
-\brief Attach a TextureLoader to this object.
+\brief Attach a OXT listener to this object.
 
 \param observer
 */
 
-void DataLoader::attachTextureLoader(SubWindow* observer) {
-    textureObservers.push_back(observer);
-    SafeQueue<sf::Image>* queue = new SafeQueue<sf::Image>();
-    textureQueues.push_back(queue);
+void DataLoader::attach(Observer<OXT>* observer) {
+    oxtObservers.push_back(observer);
 }
 
 /**
@@ -154,14 +141,8 @@ void DataLoader::attachTextureLoader(SubWindow* observer) {
 void DataLoader::pop() {
     if (cloudpointQueue->size() > 0) cloudpointQueue->pop();
     if (bboxQueue->size() > 0) bboxQueue->pop();
-
-    for (uint i = 0; i < textureQueues.size(); i++) {
-        if (textureQueues[i]->size() > 0) textureQueues[i]->pop();
-    }
-
-    for (uint i = 0; i < oxtQueues.size(); i++) {
-        if (oxtQueues[i]->size() > 0) oxtQueues[i]->pop();
-    }
+    if (imageQueue->size() > 0) imageQueue->pop();
+    if (oxtQueue->size() > 0) oxtQueue->pop();
 }
 
 /**
@@ -172,19 +153,24 @@ void DataLoader::pop() {
 void DataLoader::notify() {
     if (minQueueSize() == 0) return;
 
-    int index = 0;
-    if (cloudpointObserver)
-        cloudpointObserver->LoadDataToGraphicsCard(cloudpointQueue->pop());
-
-    if (bboxObserver)
-        bboxObserver->loadBoxes(bboxQueue->pop());
-
-    for (int i = 0; i < textureObservers.size(); i++) {
-        textureObservers[i]->loadTexture(textureQueues[i]->pop());
+    BoxList boxes = bboxQueue->pop();
+    for (int i = 0; i < bboxObservers.size(); i++) {
+        bboxObservers[i]->update(boxes);
     }
 
-    for (int i = 0; i < oxtObservers.size(); i++) {
-        oxtObservers[i]->update(oxtQueues[i]->pop());
+    CloudPoints cp = cloudpointQueue->pop();
+    for (int i = 0; i < cloudpointObservers.size(); i++) {
+        cloudpointObservers[i]->update(cp);
+    }
+
+    ImageData imageData = imageQueue->pop();
+    for (int i = 0; i < imageObservers.size(); i++) {
+        imageObservers[i]->update(imageData);
+    }
+
+    OXT oxt = oxtQueue->pop();
+    for (int i = 0; i < cloudpointObservers.size(); i++) {
+        oxtObservers[i]->update(oxt);
     }
 }
 
@@ -194,31 +180,29 @@ void DataLoader::notify() {
 */
 
 void DataLoader::loadData(const char* id) {
-    if (cloudpointObserver) {
-        char filename[400];
-        sprintf(filename, "%s/%s/%s_drive_%04d_sync/velodyne_points/data/%s.bin", path, date, date, drive, id);
-        loadCloudpoints(cloudpointQueue, filename);
-    }
+    // Load cloudpoints
+    char filename0[400];
+    sprintf(filename0, "%s/%s/%s_drive_%04d_sync/velodyne_points/data/%s.bin", path, date, date, drive, id);
+    loadCloudpoints(cloudpointQueue, filename0);
 
-    if (bboxObserver) {
-        char filename[400];
-        sprintf(filename, "%s/%s/%s_drive_%04d_sync/tracklets/%s.txt", path, date, date, drive, id);
-        loadBBoxes(bboxQueue, filename);
-    }
+    // Load tracklet
+    char filename1[400];
+    sprintf(filename1, "%s/%s/%s_drive_%04d_sync/tracklets/%s.txt", path, date, date, drive, id);
+    loadBBoxes(bboxQueue, filename1);
 
+    // Load images
+    std::vector<std::string> filenames;
     for (int i = 0; i < 2; i++) {
         char filename[400];
         sprintf(filename, "%s/%s/%s_drive_%04d_sync/image_%02d/data/%s.png", path, date, date, drive, i + 2, id);
-        loadTexture(textureQueues[i], filename);
+        filenames.push_back(std::string (filename));
     }
+    loadTexture(imageQueue, filenames);
 
-    char filename[400];
-    sprintf(filename, "%s/%s/%s_drive_%04d_sync/oxts/data/%s.txt", path, date, date, drive, id);
-    std::string newFilename(filename);
-    OXT oxt = OXT(filename);
-    for (int i = 0; i < oxtQueues.size(); i++) {
-        oxtQueues[i]->push(oxt);
-    }
+    // Load oxts
+    char filename3[400];
+    sprintf(filename3, "%s/%s/%s_drive_%04d_sync/oxts/data/%s.txt", path, date, date, drive, id);
+    loadOXT(oxtQueue, filename3);
 }
 
 /**
@@ -227,48 +211,60 @@ void DataLoader::loadData(const char* id) {
 */
 
 void DataLoader::loadDataByThread(const char* id) {
-    int startIndex = cloudpointObserver ? 1 : 0;
-    startIndex += bboxObserver ? 1 : 0;
+    std::vector<std::thread*> t;
 
-    int numThreads = startIndex + textureQueues.size();
-    std::thread t[numThreads];
+    // Load cloudpoints
+    char filename0[400];
+    sprintf(filename0, "%s/%s/%s_drive_%04d_sync/velodyne_points/data/%s.bin", path, date, date, drive, id);
+    std::string newFilename0(filename0, 400);
+    std::thread thread0 = std::thread(DataLoader::loadCloudpoints, std::ref(cloudpointQueue), newFilename0);
+    t.push_back(&thread0);
 
-    if (cloudpointObserver) {
-        char filename[400];
-        sprintf(filename, "%s/%s/%s_drive_%04d_sync/velodyne_points/data/%s.bin", path, date, date, drive, id);
-        std::string newFilename(filename, 400);
-        t[0] = std::thread(DataLoader::loadCloudpoints, std::ref(cloudpointQueue), newFilename);
-    }
+    // Load tracklet
+    char filename1[400];
+    sprintf(filename1, "%s/%s/%s_drive_%04d_sync/tracklets/%s.txt", path, date, date, drive, id);
+    std::string newFilename1(filename1, 400);
+    std::thread thread1 = std::thread(DataLoader::loadBBoxes, std::ref(bboxQueue), newFilename1);
+    t.push_back(&thread1);
 
-    if (bboxObserver) {
-        char filename[400];
-        sprintf(filename, "%s/%s/%s_drive_%04d_sync/tracklets/%s.txt", path, date, date, drive, id);
-        std::string newFilename(filename, 400);
-        t[cloudpointObserver ? 1 : 0] = std::thread(DataLoader::loadBBoxes, std::ref(bboxQueue), newFilename);
-    }
-
-    for (int i = 0; i < textureQueues.size(); i++) {
+    // Load images
+    std::vector<std::string> filenames;
+    for (int i = 0; i < 2; i++) {
         char filename[400];
         sprintf(filename, "%s/%s/%s_drive_%04d_sync/image_%02d/data/%s.png", path, date, date, drive, i + 2, id);
-        std::string newFilename(filename);
-
-        t[startIndex + i] = std::thread(DataLoader::loadTexture, std::ref(textureQueues[i]), newFilename);
+        filenames.push_back(std::string(filename));
     }
+    std::thread thread2 = std::thread(DataLoader::loadTexture, std::ref(imageQueue), filenames);
+    t.push_back(&thread2);
 
-    // This does not need to be handled by multiple thread
-    char filename[400];
-    sprintf(filename, "%s/%s/%s_drive_%04d_sync/oxts/data/%s.txt", path, date, date, drive, id);
-    std::string newFilename(filename);
-    OXT oxt = OXT(filename);
-    for (int i = 0; i < oxtQueues.size(); i++) {
-        oxtQueues[i]->push(oxt);
-    }
+    // Load oxts
+    char filename3[400];
+    sprintf(filename3, "%s/%s/%s_drive_%04d_sync/oxts/data/%s.txt", path, date, date, drive, id);
+    std::string newFilename(filename3);
+    std::thread thread3 = std::thread(DataLoader::loadOXT, std::ref(oxtQueue), filename3);
+    t.push_back(&thread3);
 
-    for (int i = 0; i < numThreads; i++) {
-        if (t[i].joinable())
-            t[i].join();
+    // Join threads
+    for (int i = 0; i < t.size(); i++) {
+        if (t[i]->joinable())
+            t[i]->join();
     }
 }
+
+/**
+\brief Threaded function to oxt;
+
+\param  queue - The queue to put data into.
+\param  filename - name of cloudpoint file.
+*/
+
+void* DataLoader::loadOXT(SafeQueue<OXT>* queue, std::string filename) {
+    if (queue->size() == QUEUE_SIZE) {
+        queue->pop();
+    }
+    queue->push(OXT(filename));
+}
+
 
 /**
 \brief Threaded function to load cloudpoints;
@@ -277,13 +273,11 @@ void DataLoader::loadDataByThread(const char* id) {
 \param  filename - name of cloudpoint file.
 */
 
-void* DataLoader::loadCloudpoints(SafeQueue<std::vector<float>>* queue, std::string filename) {
+void* DataLoader::loadCloudpoints(SafeQueue<CloudPoints>* queue, std::string filename) {
     if (queue->size() == QUEUE_SIZE) {
         queue->pop();
     }
-    std::vector<float> data = DataLoader::readBin(filename.c_str());
-
-    queue->push(data);
+    queue->push(CloudPoints(filename));
 }
 
 /**
@@ -293,37 +287,11 @@ void* DataLoader::loadCloudpoints(SafeQueue<std::vector<float>>* queue, std::str
 \param  filename - name of tracklet file.
 */
 
-void* DataLoader::loadBBoxes(SafeQueue<std::vector<BoundingBox>>* queue, std::string filename) {
-
+void* DataLoader::loadBBoxes(SafeQueue<BoxList>* queue, std::string filename) {
     if (queue->size() == QUEUE_SIZE) {
         queue->pop();
     }
-
-    std::ifstream infile(filename);
-    if(!infile.is_open())
-    {
-        std::cout << " could not open file" << filename << std::endl;
-        std::cout << " program Terminating....\n";
-        exit(EXIT_FAILURE);
-    }
-
-    std::vector<BoundingBox> data = std::vector<BoundingBox>();
-    std::string line;
-    while (std::getline(infile, line))
-    {
-        std::istringstream iss(line);
-        char objectType[10];
-        float h, w, l, tx, ty, tz, rx, ry, rz;
-        if (!(iss >> objectType >> h >> w >> l >> tx >> ty >> tz >> rx >> ry >> rz)) { exit(1); } // error
-
-        glm::vec3 size = glm::vec3(l, h, w);
-        glm::vec3 transform = glm::vec3(tx, ty, tz);
-        glm::vec3 rotation = glm::vec3(rx, ry, rz);
-
-        data.push_back(BoundingBox(objectType, size, transform, rotation));
-    }
-
-    queue->push(data);
+    queue->push(BoxList(filename));
 }
 
 /**
@@ -333,46 +301,13 @@ void* DataLoader::loadBBoxes(SafeQueue<std::vector<BoundingBox>>* queue, std::st
 \param  filename - name of cloudpoint file.
 */
 
-void* DataLoader::loadTexture(SafeQueue<sf::Image>* queue, std::string filename)
+void* DataLoader::loadTexture(SafeQueue<ImageData>* queue, std::vector<std::string> filenames)
 {
 
     if (queue->size() == QUEUE_SIZE)
         queue->pop();
 
-    sf::Image texture;
-    bool texloaded = texture.loadFromFile(filename);
-
-    if (!texloaded)
-    {
-        std::cerr << "Could not load texture." << std::endl;
-        exit(EXIT_FAILURE);
-    }
-
-    queue->push(texture);
-}
-
-/**
-\brief Load binary file and put data in float vector.
-
-\param  filename - name of binary file.
- */
-
-std::vector<float> DataLoader::readBin(const char *filename) {
-    std::ifstream fin(filename, std::ios::binary);
-    if(!fin)
-    {
-        std::cout << " Error, Couldn't find file: " << filename << "\n";
-        exit(1);
-    }
-
-    fin.seekg(0, std::ios::end);
-    const size_t num_elements = fin.tellg() / sizeof(float);
-    fin.seekg(0, std::ios::beg);
-
-    std::vector<float> data(num_elements);
-    fin.read(reinterpret_cast<char*>(&data[0]), num_elements*sizeof(float));
-
-    return data;
+    queue->push(ImageData(filenames));
 }
 
 /**
@@ -384,18 +319,10 @@ std::vector<float> DataLoader::readBin(const char *filename) {
 
 int DataLoader::minQueueSize()
 {
-    int minSize = std::max((int) cloudpointQueue->size(), 0);
-    minSize = std::min(minSize, (int) bboxQueue->size());
+    int minSize = std::max(cloudpointQueue->size(), oxtQueue->size());
+    minSize = std::min(minSize, bboxQueue->size());
+    minSize = std::min(minSize, imageQueue->size());
 
-    for (int i = 0; i < textureQueues.size(); i++)
-    {
-        minSize = std::min(minSize, (int) textureQueues[i]->size());
-    }
-
-    for (int i = 0; i < oxtQueues.size(); i++)
-    {
-        minSize = std::min(minSize, (int) oxtQueues[i]->size());
-    }
     return minSize;
 }
 
@@ -444,17 +371,4 @@ void* DataLoader::runWorkerThread(DataLoader* dl, bool& isStop, int numImages, i
             cnt = (cnt + 1) % numImages;
         }
     }
-}
-
-/**
-\brief Clear all boxes.
-*/
-
-void DataLoader::clearBoxes(std::vector<BoundingBox> boxes)
-{
-    // for (std::vector<BoundingBox*>::iterator it = boxes.begin() ; it != boxes.end(); ++it)
-    // {
-    //     delete (*it);
-    // }
-    boxes.clear();
 }

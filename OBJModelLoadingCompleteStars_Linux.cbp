@@ -18,6 +18,7 @@
 					<Add directory="lib/loaders" />
 					<Add directory="lib/utils" />
 					<Add directory="lib/objects" />
+					<Add directory="lib/data" />
 				</Compiler>
 				<Linker>
 					<Add option="-pthread" />
@@ -39,6 +40,7 @@
 					<Add directory="lib/loaders" />
 					<Add directory="lib/utils" />
 					<Add directory="lib/objects" />
+					<Add directory="lib/data" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -65,6 +67,16 @@
 		<Unit filename="lib/cameras/SphericalCamera.h" />
 		<Unit filename="lib/cameras/YPRCamera.cpp" />
 		<Unit filename="lib/cameras/YPRCamera.h" />
+		<Unit filename="lib/data/BoundingBox.cpp" />
+		<Unit filename="lib/data/BoundingBox.h" />
+		<Unit filename="lib/data/BoxList.cpp" />
+		<Unit filename="lib/data/BoxList.h" />
+		<Unit filename="lib/data/CloudPoints.cpp" />
+		<Unit filename="lib/data/CloudPoints.h" />
+		<Unit filename="lib/data/ImageData.cpp" />
+		<Unit filename="lib/data/ImageData.h" />
+		<Unit filename="lib/data/OXT.cpp" />
+		<Unit filename="lib/data/OXT.h" />
 		<Unit filename="lib/layouts/SubWindow.cpp" />
 		<Unit filename="lib/layouts/SubWindow.h" />
 		<Unit filename="lib/loaders/BoxLoader.cpp" />
@@ -77,8 +89,6 @@
 		<Unit filename="lib/loaders/PointsLoader.h" />
 		<Unit filename="lib/objects/Axes.cpp" />
 		<Unit filename="lib/objects/Axes.h" />
-		<Unit filename="lib/objects/BoundingBox.cpp" />
-		<Unit filename="lib/objects/BoundingBox.h" />
 		<Unit filename="lib/objects/Car.cpp" />
 		<Unit filename="lib/objects/Car.h" />
 		<Unit filename="lib/objects/Circle.cpp" />
@@ -112,8 +122,6 @@
 		<Unit filename="lib/utils/Material.cpp" />
 		<Unit filename="lib/utils/Material.h" />
 		<Unit filename="lib/utils/MaterialPresets.h" />
-		<Unit filename="lib/utils/OXT.cpp" />
-		<Unit filename="lib/utils/OXT.h" />
 		<Unit filename="lib/utils/ProgramDefines.h" />
 		<Unit filename="lib/utils/SafeQueue.cpp" />
 		<Unit filename="lib/utils/SafeQueue.h" />

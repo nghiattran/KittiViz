@@ -22,7 +22,6 @@
 #include "lib/cameras/YPRCamera.h"
 #include "lib/objects/Models.h"
 #include "lib/objects/MainCar.h"
-#include "lib/objects/BoundingBox.h"
 #include "lib/objects/Speedometer.h"
 #include "lib/layouts/SubWindow.h"
 #include "lib/utils/Screen.h"
@@ -51,12 +50,12 @@ class GraphicsEngine : public sf::RenderWindow {
         int sscount;    ///< Screenshot count to be appended to the screenshot filename.
         bool isDrawCloudpoints = true;
         const int NUM_LIGHT = 3;
-        static const int NUM_SUBWINDOW = 2;
 
         Axes coords;    ///< Axes Object
         PointsLoader* pointsLoader;      ///< Object to load velodyne cloud points.
         DataLoader* dataLoader;          ///< Object to control all data processing.
         BoxLoader* boxLoader;            ///< Object to control all bouding boxes.
+        SubWindow* subwindow;             ///< SubWindow Objects
         Screen* screen;
 
         GLuint ModelLoc;       ///< Location ID of the Model matrix in the shader.
@@ -81,7 +80,6 @@ class GraphicsEngine : public sf::RenderWindow {
 
         GLuint CubeMapTexId;  ///< Cube Map Texture ID.
         Models CMSphere;      ///< Sphere Object for Cube Map
-        SubWindow subwindows[NUM_SUBWINDOW]; ///< SubWindow Objects
 
         glm::mat4 projection;  ///< Projection Matrix
         glm::mat4 model;       ///< Model Matrix

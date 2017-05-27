@@ -40,14 +40,15 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
     dataLoader = DataLoader::getInstance();
 
     pointsLoader = PointsLoader::getInstance();
-    dataLoader->attachCloudpointLoader(pointsLoader);
+    dataLoader->attach(pointsLoader);
 
     boxLoader = BoxLoader::instance();
-    dataLoader->attachBoxLoader(boxLoader);
+    dataLoader->attach(boxLoader);
 
-    dataLoader->attachGauge(&speedometer);
+    subwindow = SubWindow::getInstance();
+    dataLoader->attach(subwindow);
 
-    setupSideWindows();
+    dataLoader->attach(&speedometer);
 
     dataLoader->runWorker();
 
@@ -200,6 +201,7 @@ GraphicsEngine::~GraphicsEngine() {
     delete pointsLoader;
     delete dataLoader;
     delete boxLoader;
+    delete subwindow;
 }
 
 /**
@@ -273,8 +275,8 @@ void GraphicsEngine::display()
     mainCar.draw(projection, view);
 
     glViewport(0, 0, subwindowSize.x, subwindowSize.y);
-    drawSideWindows();
-    glUseProgram(program);
+    subwindow->draw();
+
 
     sf::RenderWindow::display();
     printOpenGLErrors();
@@ -766,38 +768,4 @@ void GraphicsEngine::setFrameRate(int frameRate)
 int GraphicsEngine::getFrameRate() const
 {
     return fps;
-}
-
-/**
-\brief Draw all subwindows.
-*/
-
-void GraphicsEngine::drawSideWindows()
-{
-    for (int i = 0; i < NUM_SUBWINDOW; i++)
-    {
-        subwindows[i].draw();
-    }
-}
-
-/**
-\brief Setup all subwindows.
-*/
-
-void GraphicsEngine::setupSideWindows()
-{
-    for (int i = 0; i < NUM_SUBWINDOW; i++)
-    {
-        dataLoader->attachTextureLoader(&subwindows[i]);
-
-        float h = 1;
-        float w = 2;
-        float cx = -0.5 + 1 * i;
-        float cy = 0;
-
-        glm::mat4 subwindowModel = glm::translate(glm::mat4(1.0), glm::vec3(cx, cy, 0));
-
-        subwindows[i].setSize(h, w);
-        subwindows[i].setModelMatrix(subwindowModel);
-    }
 }

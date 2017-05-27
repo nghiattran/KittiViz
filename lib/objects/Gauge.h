@@ -18,10 +18,11 @@
 #include "../utils/ProgramDefines.h"
 #include "../utils/LoadShaders.h"
 #include "../utils/Texture.h"
-#include "../utils/OXT.h"
+#include "../data/OXT.h"
+#include "../patterns/Observer.h"
 #include "../utils/TextureController.h"
 
-class Gauge : public TextureController {
+class Gauge : public Observer<OXT>, public TextureController {
     public:
         Gauge(Color color);
         Gauge(Circle* c1, Circle* c2, Circle* c3);

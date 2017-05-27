@@ -55,26 +55,16 @@ PointsLoader* PointsLoader::getInstance() {
 }
 
 /**
-\brief Loads the vertex and color data to the graphics card by filename.
-
-*/
-
-void PointsLoader::LoadDataToGraphicsCard(const char * filename)
-{
-    // Load data points
-    std::vector<float> data = readBin(filename);
-    LoadDataToGraphicsCard(data);
-}
-
-/**
 \brief Loads the vertex and color data to the graphics card by vector<float>.
 
 */
 
-void PointsLoader::LoadDataToGraphicsCard(std::vector<float> data)
+void PointsLoader::update(CloudPoints cp)
 {
     isLoaded = true;
 
+    std::vector<float> data = cp.getData();
+    
     GLuint vPosition = 0;
     GLuint vColor = 1;
 
@@ -128,7 +118,8 @@ void PointsLoader::LoadDataToGraphicsCard(std::vector<float> data)
 
 */
 
-void PointsLoader::draw() {
+void PointsLoader::draw() 
+{
     if (!isLoaded)
         return;
 
@@ -136,22 +127,4 @@ void PointsLoader::draw() {
     glBindVertexArray(vboptr);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboptr);
     glDrawElements(GL_POINTS, num_pts * 3, GL_UNSIGNED_SHORT, NULL);
-}
-
-std::vector<float> PointsLoader::readBin(const char *filename) {
-    std::ifstream fin(filename, std::ios::binary);
-    if(!fin)
-    {
-        std::cout << " Error, Couldn't find file: " << filename << "\n";
-        exit(1);
-    }
-
-    fin.seekg(0, std::ios::end);
-    const size_t num_elements = fin.tellg() / sizeof(float);
-    fin.seekg(0, std::ios::beg);
-
-    std::vector<float> data(num_elements);
-    fin.read(reinterpret_cast<char*>(&data[0]), num_elements*sizeof(float));
-
-    return data;
 }

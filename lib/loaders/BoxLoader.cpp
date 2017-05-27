@@ -94,6 +94,6 @@ void BoxLoader::draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view)
     }
 }
 
-void BoxLoader::loadBoxes(std::vector<BoundingBox> v) {
-    boxes = v;
+void BoxLoader::update(BoxList v) {
+    boxes = v.getData();
 }

@@ -12,16 +12,18 @@
 
 #include "../utils/LoadShaders.h"
 #include "../utils/ProgramDefines.h"
-#include "../objects/BoundingBox.h"
+#include "../data/BoundingBox.h"
+#include "../data/BoxList.h"
+#include "../patterns/Observer.h"
 
-class BoxLoader
+class BoxLoader : public Observer<BoxList>
 {
     public:
         static BoxLoader* instance();
         virtual ~BoxLoader();
         void draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view);
         void LoadDataToGraphicsCard();
-        void loadBoxes(std::vector<BoundingBox> v);
+        void update(BoxList v);
     protected:
 
     private:

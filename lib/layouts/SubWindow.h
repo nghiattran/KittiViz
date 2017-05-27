@@ -15,22 +15,26 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../objects/Models.h"
-#include "../utils/TextureController.h"
+#include "../patterns/Observer.h"
+#include "../data/ImageData.h"
+#include "../layouts/CameraImage.h"
 
-class SubWindow : public TextureController, Models
+class SubWindow : public Observer<ImageData>
 {
     public:
-        SubWindow();
+        static SubWindow* getInstance();
         ~SubWindow();
 
         void draw();
-        const glm::mat4 getModelMatrix();
-        void setModelMatrix(glm::mat4 nmodel) override;
-        void setSize(float h, float w);
     protected:
     private:
+        SubWindow();
 
-        void update(const char * data);       ///< Implementation of observer pattern.
+        static const int NUM_CAMERA = 2;
+        CameraImage cameraImages[NUM_CAMERA];
+
+        static SubWindow* mInstance;
+
+        void update(ImageData data);       ///< Implementation of observer pattern.
 };
 #endif // SubWindow_H

@@ -1,9 +1,21 @@
 #include "SubWindow.h"
 
+SubWindow* SubWindow::mInstance = NULL;
+
 SubWindow::SubWindow()
 {
-    createTessellatedWallOBJ(1, 1, 1, 1);
-    load(0, 1, 2, 3);
+    for (int i = 0; i < NUM_CAMERA; i++)
+    {
+        float h = 1;
+        float w = 2;
+        float cx = -0.5 + 1 * i;
+        float cy = 0;
+
+        glm::mat4 subwindowModel = glm::translate(glm::mat4(1.0), glm::vec3(cx, cy, 0));
+
+        cameraImages[i].setSize(h, w);
+        cameraImages[i].setModelMatrix(subwindowModel);
+    }
 }
 
 SubWindow::~SubWindow()
@@ -11,37 +23,28 @@ SubWindow::~SubWindow()
     //dtor
 }
 
-
-/**
-\brief Draw road.
-\param nprogram - program that is in used before drawing texture. This make sure everything is reset after draw texture.
-*/
+SubWindow* SubWindow::getInstance()
+{
+    if (!mInstance)
+    {
+        mInstance = new SubWindow();
+    }
+    return mInstance;
+}
 
 void SubWindow::draw()
 {
-    useProgram();
-    Models::draw();
+    for (int i = 0; i < NUM_CAMERA; i++)
+    {
+        cameraImages[i].draw();
+    }
 }
 
-/**
-\brief Set model matrix.
-\param nmodel - target matrix.
-*/
-
-void SubWindow::setModelMatrix(glm::mat4 nmodel)
+void SubWindow::update(ImageData data)
 {
-    // Flip image around x axis, to fix flipping error
-    model = glm::rotate(nmodel, 180*degf, glm::vec3(1, 0, 0));
-    TextureController::setModelMatrix(model);
-}
-
-/**
-\brief Set size.
-\parame int - number of lanes
-*/
-
-void SubWindow::setSize(float h, float w)
-{
-    createTessellatedWallOBJ(h, w, 1, 1);
-    load(0, 1, 2, 3);
+    std::vector<sf::Image> images = data.getData();
+    for (int i = 0; i < std::min(4, (int)images.size()); i++)
+    {
+        cameraImages[i].loadTexture(images[i]);
+    }
 }

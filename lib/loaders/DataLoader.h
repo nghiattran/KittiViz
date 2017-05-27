@@ -11,9 +11,6 @@
 #include <queue>
 #include <vector>
 #include <thread>
-#include <sstream>
-#include <string>
-#include <fstream>
 #include <dirent.h>
 #include <sys/types.h>
 
@@ -22,7 +19,10 @@
 
 #include "../layouts/SubWindow.h"
 #include "../utils/SafeQueue.h"
-#include "../utils/OXT.h"
+#include "../data/OXT.h"
+#include "../data/BoxList.h"
+#include "../data/CloudPoints.h"
+#include "../data/ImageData.h"
 #include "../objects/Gauge.h"
 
 class DataLoader
@@ -38,18 +38,20 @@ class DataLoader
         void update();
         void setFPS(int nfps);
         void setPlayingVideo(bool val);
-        void attachCloudpointLoader(PointsLoader*);
-        void attachTextureLoader(SubWindow*);
-        void attachBoxLoader(BoxLoader*);
-        void attachGauge(Gauge*);
+
+        void attach(Observer<CloudPoints>*);
+        void attach(Observer<OXT>*);
+        void attach(Observer<BoxList>*);
+        void attach(Observer<ImageData>*);
+
         void runWorker();
     protected:
     private:
         DataLoader();
 
-        char path[100] = "/home/nghia/workplace/data/kitti";
+        char path[100] = "/home/nghia/data/kitti";
         char date[20] = "2011_09_26";
-        int drive = 36;
+        int drive = 1;
 
         int cnt = 0;
         int numImages = 0;          ///< Total number of frames in a video.
@@ -61,19 +63,15 @@ class DataLoader
         static DataLoader* mInstance;
         std::thread workerThread;
 
-        std::vector <SafeQueue<OXT>*> oxtQueues;
-        std::vector <Gauge*> oxtObservers;
+        std::vector<Observer<CloudPoints>*> cloudpointObservers;
+        std::vector<Observer<ImageData>*> imageObservers;
+        std::vector<Observer<BoxList>*> bboxObservers;
+        std::vector<Observer<OXT>*> oxtObservers;
 
-        SafeQueue <std::vector<float>>* cloudpointQueue;
-        PointsLoader* cloudpointObserver = NULL;
-
-        SafeQueue <std::vector<BoundingBox>>* bboxQueue;
-        BoxLoader* bboxObserver = NULL;
-
-        std::vector <SafeQueue<sf::Image>*> textureQueues;
-        std::vector <SubWindow*> textureObservers;
-
-        std::queue<std::thread> threadQueue;
+        SafeQueue<CloudPoints>* cloudpointQueue;
+        SafeQueue<ImageData>* imageQueue;
+        SafeQueue<BoxList>* bboxQueue;
+        SafeQueue<OXT>* oxtQueue;
 
         void notify();
 
@@ -83,16 +81,13 @@ class DataLoader
         void loadDataByThread(const char* id);
 
         int minQueueSize();
-        int minQueueSize(DataLoader* dl);
 
-        static void* loadCloudpoints(SafeQueue<std::vector<float>>*, std::string);
-        static void* loadTexture(SafeQueue<sf::Image>*, std::string);
-        static void* loadBBoxes(SafeQueue<std::vector<BoundingBox>>* queue, std::string filename);
+        static void* loadCloudpoints(SafeQueue<CloudPoints>*, std::string);
+        static void* loadTexture(SafeQueue<ImageData>*, std::vector<std::string> filenames);
+        static void* loadBBoxes(SafeQueue<BoxList>* queue, std::string filename);
+        static void* loadOXT(SafeQueue<OXT>* queue, std::string filename);
 
-        static std::vector<float> readBin(const char *filename);   ///< Load binary vector from bin file.
         static void* runWorkerThread(DataLoader* dl, bool& isStop, int numImages, int startID);
-
-        void clearBoxes(std::vector<BoundingBox>);
 };
 
 #endif // DATALOADER_H

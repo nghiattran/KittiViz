@@ -16,6 +16,7 @@
 class BoundingBox
 {
     public:
+        BoundingBox(std::string filename);
         BoundingBox(char[], glm::vec3, glm::vec3, float);
         BoundingBox(char[], glm::vec3, glm::vec3, glm::vec3);
         ~BoundingBox();
