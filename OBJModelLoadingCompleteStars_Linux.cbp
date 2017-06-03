@@ -19,6 +19,7 @@
 					<Add directory="lib/utils" />
 					<Add directory="lib/objects" />
 					<Add directory="lib/data" />
+					<Add directory="lib/layouts" />
 				</Compiler>
 				<Linker>
 					<Add option="-pthread" />
@@ -41,6 +42,7 @@
 					<Add directory="lib/utils" />
 					<Add directory="lib/objects" />
 					<Add directory="lib/data" />
+					<Add directory="lib/layouts" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -77,10 +79,14 @@
 		<Unit filename="lib/data/ImageData.h" />
 		<Unit filename="lib/data/OXT.cpp" />
 		<Unit filename="lib/data/OXT.h" />
+		<Unit filename="lib/layouts/CameraImage.cpp" />
+		<Unit filename="lib/layouts/CameraImage.h" />
 		<Unit filename="lib/layouts/SubWindow.cpp" />
 		<Unit filename="lib/layouts/SubWindow.h" />
 		<Unit filename="lib/loaders/BoxLoader.cpp" />
 		<Unit filename="lib/loaders/BoxLoader.h" />
+		<Unit filename="lib/loaders/ConfigLoader.cpp" />
+		<Unit filename="lib/loaders/ConfigLoader.h" />
 		<Unit filename="lib/loaders/DataLoader.cpp" />
 		<Unit filename="lib/loaders/DataLoader.h" />
 		<Unit filename="lib/loaders/DataLoaderWorker.cpp" />

@@ -76,6 +76,8 @@ void BoxLoader::LoadDataToGraphicsCard()
 
 void BoxLoader::draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view)
 {
+    if (!isShow) return;
+
     glLineWidth(3);
     for (int i = 0; i < boxes.size(); i++)
     {
@@ -94,6 +96,12 @@ void BoxLoader::draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view)
     }
 }
 
-void BoxLoader::update(BoxList v) {
+void BoxLoader::update(BoxList v) 
+{
     boxes = v.getData();
+}
+
+void BoxLoader::toggleDisplay()
+{
+    isShow = !isShow;
 }

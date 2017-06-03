@@ -196,6 +196,10 @@ void UI::keyPressed(sf::Event::KeyEvent keyevent)
         ge->toggleSpeedUnit();
         break;
 
+    case sf::Keyboard::B:
+        ge->toggleBoxes();
+        break;
+
     default:
         break;
     }

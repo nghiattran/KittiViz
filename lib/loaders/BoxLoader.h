@@ -24,13 +24,15 @@ class BoxLoader : public Observer<BoxList>
         void draw(GLuint PVMLoc, glm::mat4 projection, glm::mat4 view);
         void LoadDataToGraphicsCard();
         void update(BoxList v);
+        void toggleDisplay();
     protected:
 
     private:
         BoxLoader();
         static BoxLoader* mInstance;
-
         static const int NUM_PTS = 12;
+
+        bool isShow = false;
         std::vector<float> data;
         std::vector<BoundingBox> boxes;
 

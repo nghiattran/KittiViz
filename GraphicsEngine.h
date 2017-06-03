@@ -18,6 +18,7 @@
 #include "lib/loaders/PointsLoader.h"
 #include "lib/loaders/DataLoader.h"
 #include "lib/loaders/BoxLoader.h"
+#include "lib/loaders/ConfigLoader.h"
 #include "lib/cameras/SphericalCamera.h"
 #include "lib/cameras/YPRCamera.h"
 #include "lib/objects/Models.h"
@@ -56,6 +57,7 @@ class GraphicsEngine : public sf::RenderWindow {
         DataLoader* dataLoader;          ///< Object to control all data processing.
         BoxLoader* boxLoader;            ///< Object to control all bouding boxes.
         SubWindow* subwindow;             ///< SubWindow Objects
+        ConfigLoader* confLoader;
         Screen* screen;
 
         GLuint ModelLoc;       ///< Location ID of the Model matrix in the shader.
@@ -63,7 +65,6 @@ class GraphicsEngine : public sf::RenderWindow {
         GLuint PVMLoc;         ///< Location ID of the PVM matrix in the shader.
         GLuint program;        ///< ID of the shader program.
         GLuint CMprogram;      ///< ID of the cube map shader program.
-        GLuint Rprogram;       ///< ID of the road shader program.
         GLuint texTransLoc;    ///< Location ID of the texture transformation
 
         SphericalCamera sphcamera;   ///< Spherical Camera
@@ -112,25 +113,12 @@ class GraphicsEngine : public sf::RenderWindow {
         GLboolean isYPRCameraOn();
         void setYPRCameraOn();
 
-        // void loadLight(Light Lt);
-        // void loadMaterial(Material Mat);
-
-        // void turnLightOn();
-        // void turnLightOff();
-        // void turnLightOn(std::string name, int i);
-        // void turnLightOff(std::string name, int i);
-        // void turnLightsOn(std::string name, int num);
-        // void turnLightsOff(std::string name, int num);
-
-        // void LoadLights(Light Lt[], std::string name, int num);
-        // void LoadLight(Light Lt, std::string name, int i);
-
         void setDrawAxes(GLboolean b);
         void toggleDrawAxes();
 
         void setPlayingVideo(GLboolean b);
         void togglePlayingVideo();
-
+        void toggleBoxes();
         void toggleDrawCloudpoints();
         void toggleSpeedUnit();
 

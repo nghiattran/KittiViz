@@ -1,7 +1,6 @@
 #ifndef CLOUDPOINTS_H
 #define CLOUDPOINTS_H
 
-#include <vector>
 #include <stdio.h>
 #include <iostream>
 #include <sstream>

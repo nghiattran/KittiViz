@@ -31,9 +31,12 @@ GraphicsEngine::GraphicsEngine(std::string title, GLint width, GLint height) :
                      sf::Style::Default,
                      sf::ContextSettings(24, 8, 4, 3, 3))
 {
-    isDrawAxes = GL_TRUE;
+    isDrawAxes = GL_FALSE;
     isPlaying = GL_FALSE;
     fps = 5;
+
+    confLoader = ConfigLoader::getInstance();
+    confLoader->loadFile("conf.txt");
 
     screen = Screen::getInstance();
 
@@ -245,13 +248,13 @@ void GraphicsEngine::display()
     glUseProgram(program);
 
     // Set axes scaling.
-    glm::mat4 axesscale = glm::scale(glm::mat4(1.0), glm::vec3(10, 10, 10));
+    glm::mat4 axesscale = glm::scale(glm::mat4(1.0), glm::vec3(2));
 
     // Load matrix product to shader.
     glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(projection*view*axesscale));
 
-    // if (isDrawAxes)
-    //     coords.draw();
+    if (isDrawAxes)
+        coords.draw();
 
     // Reset PVM
     glUniformMatrix4fv(PVMLoc, 1, GL_FALSE, glm::value_ptr(projection*view*up));
@@ -768,4 +771,13 @@ void GraphicsEngine::setFrameRate(int frameRate)
 int GraphicsEngine::getFrameRate() const
 {
     return fps;
+}
+
+/**
+\brief Toggle displaying bounding boxes.
+*/
+
+void GraphicsEngine::toggleBoxes()
+{
+    boxLoader->toggleDisplay();
 }
