@@ -9,4 +9,4 @@ This is the final project for [Dr. Spickler](http://facultyfp.salisbury.edu/desp
 
 ## Gif demo ([Youtube video](https://www.youtube.com/watch?v=mxfc5-9cF9o&feature=youtu.be))
 
-![Alt Text](https://j.gifs.com/BgWyoY.gif)
+![Gif](https://cloud.githubusercontent.com/assets/13736109/26754628/45aab0b4-484c-11e7-862b-77ad8d74ed2e.gif)
