@@ -5,12 +5,8 @@ This is the final project for [Dr. Spickler](http://facultyfp.salisbury.edu/desp
 
 ## Project poster
 
-<p align="center">
-  ![Poster](./assets/poster.png)
-</p>
+![Poster](./assets/poster.png)
 
 ## Video demo
 
-<p align="center">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/mxfc5-9cF9o" frameborder="0" allowfullscreen></iframe>
-</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mxfc5-9cF9o" frameborder="0" allowfullscreen></iframe>
