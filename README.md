@@ -7,6 +7,6 @@ This is the final project for [Dr. Spickler](http://facultyfp.salisbury.edu/desp
 
 ![Poster](./assets/poster.png)
 
-## Video demo
+## Gif demo ([Youtube video](https://www.youtube.com/watch?v=mxfc5-9cF9o&feature=youtu.be))
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mxfc5-9cF9o" frameborder="0" allowfullscreen></iframe>
+![Alt Text](https://j.gifs.com/BgWyoY.gif)
