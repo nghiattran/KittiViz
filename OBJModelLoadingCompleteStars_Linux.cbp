@@ -138,7 +138,6 @@
 		<Unit filename="lib/utils/TextureController.cpp" />
 		<Unit filename="lib/utils/TextureController.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="teapot.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
