@@ -49,9 +49,9 @@ class DataLoader
     private:
         DataLoader();
 
-        char path[100] = "/home/nghia/data/kitti";
+        char path[100] = "/media/nghia/TOSHIBA EXT/datasets/kitti";
         char date[20] = "2011_09_26";
-        int drive = 36;
+        int drive = 1;
 
         int cnt = 0;
         int numImages = 0;          ///< Total number of frames in a video.

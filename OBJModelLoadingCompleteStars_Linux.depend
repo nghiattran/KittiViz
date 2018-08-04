@@ -2374,3 +2374,490 @@
 1496499137 source:/media/nghia/nvme/workplace/projects/cosc482/OBJModelLoadingCompleteStars/lib/loaders/ConfigLoader.cpp
 	"ConfigLoader.h"
 
+1533407826 source:/home/nghia/workplace/projects/KittiViz/GraphicsEngine.cpp
+	"GraphicsEngine.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/GraphicsEngine.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	<stdio.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"lib/objects/Axes.h"
+	"lib/loaders/PointsLoader.h"
+	"lib/loaders/DataLoader.h"
+	"lib/loaders/BoxLoader.h"
+	"lib/loaders/ConfigLoader.h"
+	"lib/cameras/SphericalCamera.h"
+	"lib/cameras/YPRCamera.h"
+	"lib/objects/Models.h"
+	"lib/objects/MainCar.h"
+	"lib/objects/Speedometer.h"
+	"lib/layouts/SubWindow.h"
+	"lib/utils/Screen.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Axes.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/loaders/PointsLoader.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<stdio.h>
+	<cstdlib>
+	<iomanip>
+	<fstream>
+	<vector>
+	<math.h>
+	<iostream>
+	<string>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../patterns/Observer.h"
+	"../utils/ProgramDefines.h"
+	"../utils/LoadShaders.h"
+	"../data/CloudPoints.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/patterns/Observer.h
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/ProgramDefines.h
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/LoadShaders.h
+	<GL/gl.h>
+	<string>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/data/CloudPoints.h
+	<stdio.h>
+	<iostream>
+	<sstream>
+	<string>
+	<fstream>
+	<vector>
+
+1533408489 /home/nghia/workplace/projects/KittiViz/lib/loaders/DataLoader.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<stdio.h>
+	<iostream>
+	<deque>
+	<queue>
+	<vector>
+	<thread>
+	<dirent.h>
+	<sys/types.h>
+	"PointsLoader.h"
+	"BoxLoader.h"
+	"../layouts/SubWindow.h"
+	"../utils/SafeQueue.h"
+	"../data/OXT.h"
+	"../data/BoxList.h"
+	"../data/CloudPoints.h"
+	"../data/ImageData.h"
+	"../objects/Gauge.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/loaders/BoxLoader.h
+	<stdio.h>
+	<cstdlib>
+	<iostream>
+	<vector>
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../utils/LoadShaders.h"
+	"../utils/ProgramDefines.h"
+	"../data/BoundingBox.h"
+	"../data/BoxList.h"
+	"../patterns/Observer.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/data/BoundingBox.h
+	<stdio.h>
+	<cstdlib>
+	<string>
+	<iostream>
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../utils/LoadShaders.h"
+	"../utils/ProgramDefines.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/data/BoxList.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<sstream>
+	<string>
+	<fstream>
+	<vector>
+	"../data/BoundingBox.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/layouts/SubWindow.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	<stdio.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../patterns/Observer.h"
+	"../data/ImageData.h"
+	"../layouts/CameraImage.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/data/ImageData.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<stdio.h>
+	<iostream>
+	<string>
+	<vector>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/layouts/CameraImage.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../objects/Models.h"
+	"../utils/TextureController.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Models.h
+	<GL/glew.h>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<iostream>
+	"../utils/ProgramDefines.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/TextureController.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	<stdio.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../utils/LoadShaders.h"
+	"../utils/ProgramDefines.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/SafeQueue.h
+	<queue>
+	<thread>
+	<mutex>
+	<condition_variable>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/data/OXT.h
+	<iostream>
+	<string>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Gauge.h
+	<GL/glew.h>
+	<iostream>
+	<string>
+	<stdio.h>
+	<math.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../objects/Circle.h"
+	"../objects/Ruler.h"
+	"../objects/TextRendererTTF.h"
+	"../utils/ProgramDefines.h"
+	"../utils/LoadShaders.h"
+	"../utils/Texture.h"
+	"../data/OXT.h"
+	"../patterns/Observer.h"
+	"../utils/TextureController.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Circle.h
+	<GL/glew.h>
+	<iostream>
+	<string>
+	<stdio.h>
+	<math.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../objects/Models.h"
+	"../objects/Circle.h"
+	"../objects/TextRendererTTF.h"
+	"../utils/ProgramDefines.h"
+	"../utils/LoadShaders.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/TextRendererTTF.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<string>
+	<iostream>
+	<fstream>
+	<ft2build.h>
+	"LoadShaders.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Ruler.h
+	<GL/glew.h>
+	<iostream>
+	<string>
+	<stdio.h>
+	<math.h>
+	<vector>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<glm/ext.hpp>
+	"../objects/Models.h"
+	"../objects/Circle.h"
+	"../objects/TextRendererTTF.h"
+	"../utils/ProgramDefines.h"
+	"../utils/LoadShaders.h"
+	"../utils/Screen.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/Screen.h
+	<cstddef>
+	<stdio.h>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/Texture.h
+	<GL/glew.h>
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/loaders/ConfigLoader.h
+	<stdio.h>
+	<iostream>
+	<sstream>
+	<string>
+	<fstream>
+	<string.h>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/cameras/SphericalCamera.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<math.h>
+	"../utils/ProgramDefines.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/cameras/YPRCamera.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"../utils/ProgramDefines.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/MainCar.h
+	"Car.h"
+	"../utils/Material.h"
+	"../utils/MaterialPresets.h"
+	"../objects/Light.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Car.h
+	<GL/glew.h>
+	"../objects/ObjModel.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/ObjModel.h
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<SFML/Graphics.hpp>
+	<iostream>
+	<string>
+	<vector>
+	<fstream>
+	"../utils/LoadShaders.h"
+	"../utils/ProgramDefines.h"
+	"../utils/Material.h"
+	"../objects/Light.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/Material.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Light.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/utils/MaterialPresets.h
+	"Material.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/Speedometer.h
+	<typeinfo>
+	"../objects/Gauge.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/cameras/SphericalCamera.cpp
+	"SphericalCamera.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/cameras/YPRCamera.cpp
+	"YPRCamera.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/data/BoundingBox.cpp
+	"BoundingBox.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/data/BoxList.cpp
+	"BoxList.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/data/CloudPoints.cpp
+	"CloudPoints.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/data/ImageData.cpp
+	"ImageData.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/data/OXT.cpp
+	"OXT.h"
+	<sstream>
+	<string>
+	<fstream>
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/layouts/CameraImage.cpp
+	"CameraImage.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/layouts/SubWindow.cpp
+	"SubWindow.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/loaders/BoxLoader.cpp
+	"BoxLoader.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/loaders/ConfigLoader.cpp
+	"ConfigLoader.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/loaders/DataLoader.cpp
+	"DataLoader.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/loaders/DataLoaderWorker.cpp
+	"DataLoaderWorker.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/loaders/DataLoaderWorker.h
+	<iostream>
+	<thread>
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/loaders/PointsLoader.cpp
+	"PointsLoader.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Axes.cpp
+	"Axes.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Car.cpp
+	"Car.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Circle.cpp
+	"Circle.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Gauge.cpp
+	"Gauge.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Light.cpp
+	"Light.h"
+
+1533409571 source:/home/nghia/workplace/projects/KittiViz/lib/objects/MainCar.cpp
+	"MainCar.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Models.cpp
+	"Models.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/ObjModel.cpp
+	"ObjModel.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/OtherCar.cpp
+	"OtherCar.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/OtherCar.h
+	"Car.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/RoadPlane.cpp
+	"RoadPlane.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/objects/RoadPlane.h
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	<stdio.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"Models.h"
+	"../utils/LoadShaders.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Ruler.cpp
+	"Ruler.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/Speedometer.cpp
+	"Speedometer.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/objects/TextRendererTTF.cpp
+	"TextRendererTTF.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/patterns/Observer.cpp
+	"Observer.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/patterns/Subject.cpp
+	"Subject.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/lib/patterns/Subject.h
+	<stdlib.h>
+	<vector>
+	<stdio.h>
+	"Observer.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/utils/LoadShaders.cpp
+	<cstdlib>
+	<iostream>
+	<fstream>
+	<GL/glew.h>
+	"LoadShaders.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/utils/Material.cpp
+	"Material.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/utils/SafeQueue.cpp
+	"SafeQueue.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/utils/Screen.cpp
+	"Screen.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/utils/Texture.cpp
+	"Texture.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/lib/utils/TextureController.cpp
+	"TextureController.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/main.cpp
+	<GL/glew.h>
+	<SFML/Graphics.hpp>
+	<SFML/OpenGL.hpp>
+	<SFML/System.hpp>
+	<iostream>
+	<string>
+	"GraphicsEngine.h"
+	"UI.h"
+
+1533407826 /home/nghia/workplace/projects/KittiViz/UI.h
+	"GraphicsEngine.h"
+
+1533407826 source:/home/nghia/workplace/projects/KittiViz/UI.cpp
+	"UI.h"
+
